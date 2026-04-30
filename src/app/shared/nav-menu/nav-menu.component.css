@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-container {
+  background-color: #dfdfdf;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  color: inherit; /* Opcional: faz o texto assumir a cor do texto do container */
+}
