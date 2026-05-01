@@ -1,20 +1,23 @@
 <main>
   <app-nav-bar></app-nav-bar>
-  <div class="main d-flex flex-column gap-2">
+  <div class="main d-flex flex-column gap-3">
     <app-carousel class="carousel-container"></app-carousel>
 
     <div class="select-restaurant radius-16">
       <div class="d-flex">
-        <i class="fa-solid fa-angle-down pt-1"></i>
-        <div class="adress ps-1">
-          <p class="m-0 name">BA - {{ title }}</p>
-          <span class="m-0">Largo do Farol da Barra, 49 - Barra, 40140-650</span>
+        <i class="fa-solid fs-5 fa-angle-down pt-2 primary"></i>
+        <div class="adress ps-2">
+          <p class="m-0 name color-custom"><strong>BA - {{ title }}</strong></p>
+          <span class="m-0 color-muted">Largo do Farol da Barra, 49 - Barra, 40140-650</span>
         </div>
       </div>
       <div>
-        <i class="fa-solid fa-location-dot"></i>
+        <i class="fa-solid fa-location-dot fs-5 primary"></i>
       </div>
     </div>
+
+    <app-food-menu></app-food-menu>
+    <app-dish-card></app-dish-card>
   </div>
   <app-nav-menu class="footer-menu"></app-nav-menu>
 </main>

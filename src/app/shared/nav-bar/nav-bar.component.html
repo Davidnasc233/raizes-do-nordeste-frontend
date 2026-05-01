@@ -1,24 +1,18 @@
 <nav class="nav-container my-0">
-  <div class="d-flex align-items-center justify-content-between mx-3 py-2">
+  <div class="d-flex align-items-center justify-content-between items">
     <div class="d-flex align-items-center gap-2">
-      <img src="images/logo.png" alt="logo" class="logo" />
+      <img src="images/logo.png" alt="logo" class="logo radius-8" />
       <div class="d-flex flex-column">
-        <span class="logo-text title-1 font-weight-regular">Raizes <small>do</small></span>
-        <h1 class="logo-text title-2 font-weight-bolder">Nordeste</h1>
       </div>
     </div>
 
     <div class="buttons">
-      <button>
-        <i class="fa-brands fa-square-web-awesome"></i>
+      <button class="loyalty">
+        <i class="fa-solid fa-crown"></i>
       </button>
 
-      <button (click)="toggleNotification()">
-        @if (hasNotification) {
-          <i class="fa-regular fa-bell"></i>
-        } @else {
-          <i class="fa-solid fa-bell"></i>
-        }
+      <button class="notification">
+        <i class="fa-solid fa-bell"></i>
       </button>
     </div>
   </div>

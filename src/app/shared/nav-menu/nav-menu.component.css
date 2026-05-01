@@ -10,8 +10,13 @@
 }
 
 .nav-container {
-  background-color: #dfdfdf;
+  background-color: var(--foreground);
   padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--color-muted);
+}
+
+.items {
+  padding: 12px 32px;
 }
 
 .logo {
@@ -22,6 +27,16 @@
 .buttons {
   display: flex;
   gap: 8px;
+}
+
+.buttons i, span {
+  display: flex;
+  font-size: 0.7rem;
+  gap: 8px;
+}
+
+.active {
+  color: var(--accent);
 }
 
 button {

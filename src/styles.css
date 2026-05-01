@@ -15,3 +15,33 @@ i {
 .radius-16 {
   border-radius: 16px;
 }
+
+/* cores */
+
+:root {
+  --color-primary: #ac3d33; /* Vermelho Terracota */
+  --secondary: #ede6d9; /* Creme / Bege claro */
+  --accent: #e3a668; /* Ouro envelhecido / Âmbar */
+  --background: #faf8f2; /* Off-white quente */
+  --foreground: #2a140c;
+  --color-text: #3a322f; /* Marrom quase preto */
+  --color-muted: #7d7266;
+}
+
+/* Cores de Texto */
+.primary { color: var(--color-primary); }
+.secondary { color: var(--secondary); }
+.accent { color: var(--accent); }
+.color-custom { color: var(--color-text); }
+.color-muted { color: var(--color-muted); }
+
+/* Cores de Fundo */
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-background { background-color: var(--background); }
+.bg-foreground { background-color: var(--foreground); }
+.bg-accent { background-color: var(--accent); }
+
+/* Bordas e Raio */
+.border-primary { border: 1px solid var(--color-primary); }
+.rounded-main { border-radius: 0.875rem; }

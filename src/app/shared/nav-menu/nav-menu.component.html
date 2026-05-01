@@ -1,18 +1,30 @@
 <nav class="nav-container my-0">
-  <div class="d-flex align-items-center justify-content-between mx-4 py-3">
+  <div class="d-flex align-items-center justify-content-between items">
     <div class="d-flex align-items-center">
-      <button>
-        <i class="fa-solid fa-house"></i>
+      <button 
+      class="d-flex flex-column align-items-center" 
+      (click)="selectButton('home')"
+      >
+        <i class="fa-solid fa-house secondary" [class.active]="isSelected === 'home'"></i>
+        <span class="secondary mt-1" [class.active]="isSelected === 'home'">Ínicio</span>
       </button>
     </div>
     <div class="d-flex align-items-center gap-2">
-      <button>
-        <i class="fa-solid fa-cart-shopping"></i>
+      <button 
+      class="d-flex flex-column align-items-center" 
+      (click)="selectButton('cart')"
+      >
+        <i class="fa-solid fa-cart-shopping secondary" [class.active]="isSelected === 'cart'"></i>
+        <span class="secondary mt-1" [class.active]="isSelected === 'cart'">Carrinho</span>
       </button>
     </div>
     <div class="d-flex align-items-center gap-2">
-      <button>
-        <i class="fa-solid fa-user"></i>
+      <button 
+      class="d-flex flex-column align-items-center" 
+      (click)="selectButton('account')"
+      >
+        <i class="fa-solid fa-user secondary" [class.active]="isSelected === 'account'"></i>
+        <span class="secondary mt-1" [class.active]="isSelected === 'account'">Conta</span>
       </button>
     </div>
     

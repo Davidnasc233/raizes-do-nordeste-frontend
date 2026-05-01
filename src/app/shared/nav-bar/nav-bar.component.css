@@ -1,5 +1,20 @@
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .nav-container {
-  background-color: #ccb590;
+  background-color: #e3bd8a;
+}
+
+.items {
+  padding: 16px 16px;
 }
 
 .title-1 {
@@ -18,9 +33,18 @@
   margin: 0;
 }
 
+.radius-8 {
+  border-radius: 8px;
+}
+
 .buttons {
   display: flex;
-  gap: 16px;
+  gap: 8px;
+}
+
+.buttons i {
+  color: var(--secondary);
+  font-size: 1rem;
 }
 
 button {
@@ -31,4 +55,16 @@ button {
   cursor: pointer;
   outline: inherit;
   color: inherit; /* Opcional: faz o texto assumir a cor do texto do container */
+}
+
+.loyalty {
+  background-color: var(--color-primary);
+  padding: 8px 10px;
+  border-radius: 20px;
+}
+
+.notification {
+  background-color: var(--foreground);
+  padding: 8px 10px;
+  border-radius: 20px;
 }
