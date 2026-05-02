@@ -1,0 +1,23 @@
+.select-restaurant {
+    background-color: var(--secondary);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  
+  .address {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  
+  .name {
+    font-size: 0.8rem;
+  }
+
+  span {
+    font-size: 0.6rem;
+  }

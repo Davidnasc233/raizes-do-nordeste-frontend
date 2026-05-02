@@ -1,0 +1,19 @@
+<div class="modal-container">
+    <section>
+        <p class="fw-bold">Selecione a Rede mais Próxima</p>
+    </section>
+
+    <section *ngFor="let u of unit" class="mb-2 restaurant">
+        <button
+        type="button"
+        class="bg-white p-3 radius-16 border-0 w-100 d-flex flex-column align-items-start"
+        (click)="onSelectChange(u)"
+        >
+        <div [class.selected]="selectedUnit?.id === u.id">
+            <p class="m-0 lh-1 color-custom"
+            >{{ u.name }}</p>
+            <small class="color-muted">{{ u.address }}</small>
+        </div>
+        </button>
+    </section>
+</div>

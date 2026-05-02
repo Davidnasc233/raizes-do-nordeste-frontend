@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './nav-menu.component.css'
 })
 export class NavMenuComponent {
-  isSelected: string = '';
+  isSelected: string = 'home';
 
   selectButton(value: string) {
     this.isSelected = value;

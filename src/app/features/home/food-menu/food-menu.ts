@@ -26,7 +26,7 @@ export class FoodMenu {
     },
   ]
   countItems: number = 7;
-  selectedButton: any = null;
+  selectedButton: any = 'all';
 
   selectOption(value: string) {
     this.selectedButton = value;
