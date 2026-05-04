@@ -38,15 +38,13 @@ jobs:
         run: npm ci
 
       - name: Build Project
-        # Aqui garantimos que o base-href seja o nome do repositório
+        # Mantendo seu segredo do base-href para as rotas funcionarem
         run: npm run build -- --base-href /${{ github.event.repository.name }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # O Angular costuma gerar o build em dist/[nome-do-projeto]/browser 
-          # ou apenas docs/ se você configurou o angular.json. 
-          # Pela sua imagem, parece que os arquivos ficam em ./docs
+          # Na image_9b7a95.png, vemos que seus arquivos de build estão em /docs
           path: ./docs
 
   deploy:
