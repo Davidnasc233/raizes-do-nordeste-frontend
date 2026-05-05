@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RestaurantAddressService } from '../../../services/restaurant-address.service';
-import { Subject, Subscription } from 'rxjs';
+import { combineLatest, map, Observable, Subject, takeUntil } from 'rxjs';
 import { MenuItem } from '../../../models/restaurant-models';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 export interface RestaurantUnit {
     id: number;
@@ -12,16 +13,15 @@ export interface RestaurantUnit {
 
 @Component({
     selector: 'app-dish-card',
-    imports: [],
+    imports: [CurrencyPipe, CommonModule],
     templateUrl: './dish-card.html',
     styleUrl: './dish-card.css',
 })
-export class DishCard {
+export class DishCard implements OnInit, OnDestroy {
     data: any = {};
     recipes: MenuItem[] = [];
-    selectRestaurant: RestaurantUnit | null = null;
-    private unitSubscription?: Subscription;
-    private destroy$ = new Subject<void>();
+    filteredRecipes$!: Observable<MenuItem[] | null>;
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private readonly restaurantAddressService: RestaurantAddressService) {}
 
@@ -29,10 +29,21 @@ export class DishCard {
         this.restaurantAddressService.getData().subscribe((data) => {
             this.data = data;
         });
-        this.unitSubscription = this.restaurantAddressService.selectedUnit$.subscribe((unit) => {
-            this.selectRestaurant = unit;
-            this.recipes = this.selectRestaurant?.menu ?? null;
-        });
+        this.filteredRecipes$ = combineLatest([
+            this.restaurantAddressService.selectedUnit$,
+            this.restaurantAddressService.selectCategory$,
+        ]).pipe(
+            takeUntil(this.destroy$),
+            map(([unit, category]) => {
+            const recipes = unit?.menu ?? [];
+    
+            if (!category || category === 'all') {
+                return recipes;
+            }
+    
+            return recipes.filter((item) => item.category === category);
+            }),
+        );
     }
 
     ngOnDestroy() {

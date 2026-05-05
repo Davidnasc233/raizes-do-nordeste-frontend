@@ -1,4 +1,4 @@
-@for (item of recipes; track item.id) {
+@for (item of filteredRecipes$ | async; track item.id) {
 <div class="background mb-3">
 
     <div class="d-flex">
@@ -25,7 +25,7 @@
                 <div class="d-flex">
                     <div>
                         <p class="primary m-0">
-                            <strong>{{ item.price }}</strong>
+                            <strong>{{ item.price | currency: 'BRL'}}</strong>
                         </p>
                     </div>
                 </div>
@@ -40,5 +40,5 @@
     </div>
 </div>
 } @empty {
-    <p class="text-center color-muted">Nenhum prato disponível neste momento.</p>
+<p class="text-center color-muted">Nenhum prato disponível neste momento.</p>
 }
