@@ -1,12 +1,31 @@
-<div class="select-restaurant radius-16">
-    <section class="d-flex">
-      <i class="fa-solid fs-5 fa-angle-down pt-2 primary"></i>
-      <div class="address ps-2">
-        <p class="m-0 name color-custom"><strong>{{ (unit$ | async)?.name }}</strong></p>
-        <span class="m-0 color-muted">{{ (unit$ | async)?.address }}</span>
+<div>
+  <div class="dropdown w-100" [class.show]="menuOpen">
+    <button type="button"
+      class="select-restaurant radius-16 w-100 border-0 d-flex align-items-center justify-content-between"
+      (click)="toggleMenu($event)" [attr.aria-expanded]="menuOpen">
+      <section class="d-flex">
+        <i class="fa-solid fs-5 fa-angle-down pt-2 primary" [class.rotate-180]="menuOpen"></i>
+        <div class="address ps-2">
+          <p class="m-0 name color-custom">
+            <strong>{{ (unit$ | async)?.name }}</strong>
+          </p>
+          <span class="m-0 color-muted">{{ (unit$ | async)?.address }}</span>
+        </div>
+      </section>
+      <div>
+        <i class="fa-solid fa-location-dot fs-5 primary"></i>
       </div>
-    </section>
-    <div>
-      <i class="fa-solid fa-location-dot fs-5 primary"></i>
-    </div>
+    </button>
+
+    <ul class="dropdown-menu mt-1 shadow-sm w-100 modal-select" [class.show]="menuOpen">
+      @for (u of data.unit; track u.id) {
+      <li [class.selected]="selectedRestaurant?.id === u.id">
+        <button type="button" class="dropdown-item py-2 text-start" (click)="selectUnit(u)">
+          <p class="d-block fw-semibold color-custom m-0">{{ u.name }}</p>
+          <small class="color-muted">{{ u.address }}</small>
+        </button>
+      </li>
+      }
+    </ul>
   </div>
+</div>

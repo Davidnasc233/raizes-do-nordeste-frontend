@@ -1,23 +1,43 @@
 .select-restaurant {
     background-color: var(--secondary);
     height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0 16px;
-  }
-  
-  .address {
+    cursor: pointer;
+}
+
+.modal-select {
+    z-index: 100;
+    width: 100%;
+    border-radius: 16px;
+    padding: 16px 24px;
+    overflow-y: auto;
+}
+
+.selected {
+    border-left: 2px solid var(--color-primary);
+    padding-left: 8px;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.fa-angle-down {
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+}
+
+.address {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-  }
-  
-  .name {
-    font-size: 0.8rem;
-  }
+}
 
-  span {
+.name {
+    font-size: 0.8rem;
+}
+
+span {
     font-size: 0.6rem;
-  }
+}

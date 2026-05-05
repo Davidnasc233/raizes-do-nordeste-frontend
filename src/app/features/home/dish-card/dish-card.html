@@ -1,19 +1,23 @@
-<div class="background">
+@for (item of recipes; track item.id) {
+<div class="background mb-3">
+
     <div class="d-flex">
         <div class="image">
             <img src="images/Baiao-de-dois-tradicional-O-sabor-do-nordeste-em-um-prato-completo.webp" alt="baiao">
         </div>
 
-        <div class="resume d-flex flex-column justify-content-between ms-2 w-100">
+
+        <div class="resume d-flex flex-column justify-content-between ms-2 w-100 mb-3">
+
             <div class="d-flex flex-column">
                 <p class="m-0 color-custom">
                     <strong>
-                        Baião de Dois
+                        {{ item.name }}
                     </strong>
                 </p>
 
                 <span class="color-muted">
-                    Arroz, feijão verde, queijo coalho e carne seca.
+                    {{ item.description }}
                 </span>
             </div>
 
@@ -21,7 +25,7 @@
                 <div class="d-flex">
                     <div>
                         <p class="primary m-0">
-                            <strong>R$ 42,90</strong>
+                            <strong>{{ item.price }}</strong>
                         </p>
                     </div>
                 </div>
@@ -32,5 +36,9 @@
             </div>
 
         </div>
+
     </div>
 </div>
+} @empty {
+    <p class="text-center color-muted">Nenhum prato disponível neste momento.</p>
+}
