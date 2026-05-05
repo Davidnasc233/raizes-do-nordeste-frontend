@@ -1,7 +1,7 @@
 <div class="d-flex flex-row justify-content-between overflow">
     @for (option of selectOptions; track option.value) {
     <button (click)="selectOption(option.value)" class="custom-button me-1"
-        [class.active]="selectedButton === option.value" (click)="filterMenuCategory(option.value)">
+        [class.active]="selectedCategory === option.value">
         <span><strong>{{ option.name }}</strong></span>
     </button>
     }

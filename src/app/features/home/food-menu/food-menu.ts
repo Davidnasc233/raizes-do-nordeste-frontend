@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { RestaurantAddressService } from '../../../services/restaurant-address.service';
 import { MenuItem, RestaurantUnit } from '../../../models/restaurant-models';
+import { MenuCategory } from '../../../shared/enum/category.enum';
 
 @Component({
     selector: 'app-food-menu',
@@ -9,66 +10,60 @@ import { MenuItem, RestaurantUnit } from '../../../models/restaurant-models';
     templateUrl: './food-menu.html',
     styleUrl: './food-menu.css',
 })
-export class FoodMenu {
-    private RestaurantSelected?: Subscription;
+export class FoodMenu implements OnInit {
+    private readonly destroy$ = new Subject<void>();
     restaurantSelected: RestaurantUnit | null = null;
     menuRes: MenuItem[] | null = [];
     data: any = {};
+    selectedCategory: any = null;
     selectOptions: { name: string; value: string }[] = [
         {
             name: 'Tudo',
-            value: 'all',
+            value: MenuCategory.ALL,
         },
         {
             name: 'Pratos',
-            value: 'dishes',
+            value: MenuCategory.DISHES,
         },
         {
             name: 'Bebidas',
-            value: 'drinks',
+            value: MenuCategory.DRINKS,
         },
         {
             name: 'Sobremesas',
-            value: 'desserts',
+            value: MenuCategory.DESSERTS,
         },
     ];
     countItems: number = 0;
-    selectedButton: any = 'all';
 
-    constructor(private restaurantAddressService: RestaurantAddressService) {}
+    constructor(
+        private readonly restaurantAddressService: RestaurantAddressService
+    ) {}
 
     ngOnInit() {
-        this.restaurantAddressService.getData().subscribe((data) => {
-            this.data = data;
-        });
-        this.RestaurantSelected = this.restaurantAddressService.selectedUnit$.subscribe((unit) => {
+        combineLatest([
+            this.restaurantAddressService.selectedUnit$,
+            this.restaurantAddressService.selectCategory$
+        ])
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(([unit, category]) => {
             this.restaurantSelected = unit;
+            this.selectedCategory = category;
+    
+            const allItems = unit?.menu ?? [];
+    
+            if (!category || category === MenuCategory.ALL) {
+                this.menuRes = allItems;
+                this.countItems = allItems.length;
+            } else {
+                const filtered = allItems.filter(item => item.category === category);
+                this.menuRes = filtered;
+                this.countItems = filtered.length;
+            }
         });
-        this.menuRes = this.restaurantSelected?.menu ?? null;
-        this.countMenu();
     }
-
+    
     selectOption(value: string) {
-        this.selectedButton = value;
-    }
-
-    countMenu() {
-        if (!this.menuRes) {
-            return (this.countItems = 0);
-        }
-
-        return (this.countItems = this.menuRes.length);
-    }
-
-    filterMenuCategory(category: string) {
-        if (!category || category === 'all') {
-            this.menuRes;
-            return;
-        }
-
-        // Filtra a partir da lista original do restaurante selecionado
-        if (this.menuRes) {
-            const newList = this.menuRes.filter((item) => item.category === category);
-        }
+        this.restaurantAddressService.selectCategory(value);
     }
 }
