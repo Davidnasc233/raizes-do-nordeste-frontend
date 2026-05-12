@@ -1,0 +1,4 @@
+.main {
+  flex: 1;
+  padding: calc(16px + 82px) 24px 16px;
+}
