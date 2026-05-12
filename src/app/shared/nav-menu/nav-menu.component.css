@@ -39,6 +39,26 @@
   color: var(--accent);
 }
 
+.cart-container {
+  position: relative;
+}
+
+.count {
+  position: absolute;
+  top: -5px;
+  right: 3px;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  padding: 0px 6px;
+
+  small {
+    margin-top: 2px;
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+}
+
 button {
   background: none;
   border: none;

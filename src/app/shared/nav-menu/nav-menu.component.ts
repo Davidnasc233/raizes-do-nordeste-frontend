@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent {
   isSelected: string = 'home';
+  countCart: number = 1;
 
   constructor(private router: Router) {}
 
