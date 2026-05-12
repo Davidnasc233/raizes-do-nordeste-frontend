@@ -6,7 +6,12 @@
         <span class="secondary mt-1" [class.active]="isSelected === 'home'">Ínicio</span>
       </button>
     </div>
-    <div class="d-flex align-items-center gap-2">
+    <div class="cart-container d-flex align-items-center gap-2">
+      <span class="count text-white">
+        <small>
+        {{ countCart }}
+      </small>
+    </span>
       <button class="d-flex flex-column align-items-center" (click)="selectButton('cart')">
         <i class="fa-solid fa-cart-shopping secondary" [class.active]="isSelected === 'cart'"></i>
         <span class="secondary mt-1" [class.active]="isSelected === 'cart'">Carrinho</span>
