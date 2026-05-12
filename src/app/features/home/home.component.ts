@@ -6,6 +6,7 @@ import { FoodMenu } from './food-menu/food-menu';
 import { DishCard } from './dish-card/dish-card';
 import { RestaurantSelector } from './restaurant-selector/restaurant-selector';
 import { ChooseRestaurantModal } from './restaurant-selector/choose-restaurant-modal/choose-restaurant-modal';
+import { LgpdModalComponent } from '../../shared/lgpd-modal/lgpd-modal';
 
 @Component({
   selector: 'app-home',

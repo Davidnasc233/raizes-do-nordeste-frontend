@@ -1,0 +1,77 @@
+.lgpd-container {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  background-color: #2b1108;
+  color: #ffffff;
+  padding: 20px 30px;
+  border-radius: 16px;
+  z-index: 9999;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.lgpd-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lgpd-text {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.lgpd-actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  border: none;
+  padding: 12px 25px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-refuse {
+  background-color: #3d2b24;
+  color: #fff;
+}
+
+.btn-accept {
+  background-color: #b33a1b; /* Tom terracota/laranja */
+  color: #fff;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+@media screen and (max-width: 650px) {
+  .lgpd-container {
+    width: 100%;
+    height: 100vh;
+    top: 70vh;
+    border-radius: 20px;
+  }
+
+  .lgpd-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .lgpd-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
