@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { LgpdModalComponent } from './shared/lgpd-modal/lgpd-modal';
 import { NavMenuComponent } from "./shared/nav-menu/nav-menu.component";
@@ -13,4 +13,10 @@ import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
 })
 export class App {
   protected readonly title = signal('frontend');
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.router.navigate(['/']);
+  }
 }
