@@ -19,6 +19,13 @@
   display: block;
 }
 
+.tag {
+  background-color: #326234;
+  padding: 4px 8px;
+  color: white;
+  border-radius: 6px;
+}
+
 .resume span {
   font-size: 0.65rem;
 }
