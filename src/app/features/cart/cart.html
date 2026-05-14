@@ -6,6 +6,9 @@
     </section>
 
     @if (cart.length === 0) {
-        <app-no-item-cart></app-no-item-cart>
+    <app-no-item-cart></app-no-item-cart>
+    } @else {
+        <app-cart-items [data]="cart"></app-cart-items>
+        <app-payment></app-payment>
     }
 </main>
