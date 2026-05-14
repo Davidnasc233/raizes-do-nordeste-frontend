@@ -20,7 +20,7 @@
 }
 
 .tag {
-  background-color: #326234;
+  background-color: var(--success);
   padding: 4px 8px;
   color: white;
   border-radius: 6px;

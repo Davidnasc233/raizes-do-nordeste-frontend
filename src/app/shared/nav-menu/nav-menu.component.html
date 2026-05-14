@@ -1,4 +1,5 @@
-<nav class="nav-container my-0">
+@if (currentRoute !== 'cart') {
+  <nav class="nav-container my-0">
   <div class="d-flex align-items-center justify-content-between items">
     <div class="d-flex align-items-center">
       <button class="d-flex flex-column align-items-center" (click)="selectButton('home')">
@@ -26,3 +27,6 @@
 
   </div>
 </nav>
+} @else {
+
+}

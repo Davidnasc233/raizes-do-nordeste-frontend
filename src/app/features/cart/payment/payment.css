@@ -9,6 +9,50 @@
 }
 
 .btn-custom {
-    padding: 16px;
-    border-radius: 16px;
+  padding: 16px;
+  border-radius: 16px;
+
+}
+
+.payment {
+  position: relative;
+}
+
+.btn-section {
+  position: absolute;
+  bottom: calc(-39vh + 85px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.gateway-container{
+  border-radius: 16px;
+}
+
+.gateway{
+  font-size: 0.82rem;
+}
+
+.btn-pay {
+  width: 60%;
+}
+
+.btn-simulate {
+  width: 35%;
+}
+
+@media (max-width: 768px) {
+    .btn-custom {
+      display: flex;
+      align-items: center;
+      border-radius: 12px;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .simulate {
+      font-size: 0.8rem;
+    }
 }
