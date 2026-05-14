@@ -1,0 +1,14 @@
+.container-payment {
+  background-color: var(--secondary);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.subtotal {
+  border-bottom: 1px solid var(--color-muted);
+}
+
+.btn-custom {
+    padding: 16px;
+    border-radius: 16px;
+}
