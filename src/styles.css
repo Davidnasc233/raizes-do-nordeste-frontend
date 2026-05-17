@@ -20,11 +20,13 @@ i {
 
 :root {
   --color-primary: #ac3d33; /* Vermelho Terracota */
+  --darker-primary: #882a20; /* Vermelho escuro */
   --secondary: #ede6d9; /* Creme / Bege claro */
   --accent: #e3a668; /* Ouro envelhecido / Âmbar */
   --background: #faf8f2; /* Off-white quente */
   --foreground: #2a140c;
   --success: #326234; /* Verde escuro */
+  --disabled:  #aea8a3;
   --color-text: #3a322f; /* Marrom quase preto */
   --color-muted: #7d7266;
 }
