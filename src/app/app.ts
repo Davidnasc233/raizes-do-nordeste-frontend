@@ -6,10 +6,11 @@ import { NavMenuComponent } from "./shared/nav-menu/nav-menu.component";
 import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
 import { ToastService } from './services/toast.service';
 import { CommonModule } from '@angular/common';
+import { ToastModalComponent } from './shared/toast/toast-modal.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, HomeComponent, LgpdModalComponent, NavMenuComponent, NavBarComponent, CommonModule],
+  imports: [RouterOutlet, RouterLink, HomeComponent, LgpdModalComponent, NavMenuComponent, NavBarComponent, CommonModule, ToastModalComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
