@@ -4,8 +4,8 @@ import { Cart } from './features/cart/cart';
 import { UserProfile } from './features/user-profile/user-profile';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
   { path: 'cart', component: Cart },
   { path: 'user-profile', component: UserProfile },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
 ];

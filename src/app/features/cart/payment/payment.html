@@ -7,7 +7,7 @@
                         Subtotal
                     </span>
                     <span>
-                        R$ 42,90
+                        {{( totalValue$ | async ) | currency: 'BRL' }}
                     </span>
                 </div>
                 <div class="d-flex justify-content-between">
@@ -15,7 +15,7 @@
                         Entrega
                     </span>
                     <span class="text-muted">
-                        R$ 7,90
+                        {{ deliveryFee | currency: 'BRL'}}
                     </span>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 </span>
                 <span class="primary">
                     <strong>
-                        R$ 50,80
+                        {{ (totalPayment$ | async) | currency: 'BRL' }}
                     </strong>
                 </span>
             </div>
@@ -39,7 +39,8 @@
         <div class="d-flex align-items-center gateway-container gap-2 bg-secondary-bege py-2 px-3">
             <i class="fa-solid fa-shield-halved text-success"></i>
             <span class="gateway ps-2">
-                Pagamento processado por gateway externo seguro. Os dados do cartão não são armazenados pelo app (PCI-DSS).
+                Pagamento processado por gateway externo seguro. Os dados do cartão não são armazenados pelo app
+                (PCI-DSS).
             </span>
         </div>
     </section>
@@ -53,11 +54,12 @@
                     </strong>
                 </span>
             </button>
-            <button class="d-flex align-items-center justify-content-center gap-1 btn-pay btn-custom bg-primary-red secondary">
+            <button
+                class="d-flex align-items-center justify-content-center gap-1 btn-pay btn-custom bg-primary-red secondary">
                 <i class="fa-regular fa-credit-card"></i>
                 <span class="pay">
                     <strong>
-                        Pagar R$ 50,80
+                        Pagar {{ (totalPayment$ | async) | currency: 'BRL' }}
                     </strong>
                 </span>
             </button>

@@ -22,6 +22,12 @@ export class CartService {
     );
   }
 
+  get totalValue$(): Observable<number> {
+    return this.items$.pipe(
+      map(items => items.reduce((sum, item) => sum + (item.price * item.quantity), 0))
+    );
+  }
+
   addToCart(product: Omit<ICartItem, 'quantity'>): void {
     const currentItems = this.cartItemsSubject.value;
     const existingItem = currentItems.find(item => item.id === product.id);

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Observable } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { AsyncPipe } from '@angular/common';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -12,36 +13,25 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './nav-menu.component.css',
 })
 export class NavMenuComponent implements OnInit {
-  isSelected: string = 'home';
-  countCart: number = 1;
-  currentRoute: string = '';
-  countCart$!: Observable<number>
+  currentRoute$!: Observable<string>;
+  countCart$!: Observable<number>;
 
   constructor(
     private router: Router,
-    private activeRoute: ActivatedRoute,
-    private cartService: CartService
+    private navigationService: NavigationService,
+    private cartService: CartService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.countCart$ = this.cartService.totalItems$;
+    this.currentRoute$ = this.navigationService.selectedRoute$;
   }
 
   selectButton(value: string) {
-    this.isSelected = value;
-    this.redirectToRoute(value);
-    this.isCartRoute(value);
+    this.navigationService.navigateTo(value);
   }
 
   redirectToRoute(route: string) {
     this.router.navigate([`/${route}`]);
-  }
-
-  isCartRoute(route: string): boolean {
-    if (route === 'cart') {
-      this.currentRoute = 'cart';
-      return true;
-    }
-    return false;
   }
 }

@@ -17,6 +17,17 @@
   padding: 16px 16px;
 }
 
+.background {
+  border-radius: 24px;
+  padding: 12px 14px;
+  border: none;
+  background-color: var(--background);
+}
+
+.fa-arrow-left {
+  font-size: 1rem;
+}
+
 .title-1 {
   color: #9e674a;
   line-height: 1;
