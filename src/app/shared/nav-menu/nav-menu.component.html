@@ -1,28 +1,34 @@
+@if (!(currentRoute$ | async)?.includes('cart')) {
 <nav class="nav-container my-0">
   <div class="d-flex align-items-center justify-content-between items">
     <div class="d-flex align-items-center">
       <button class="d-flex flex-column align-items-center" (click)="selectButton('home')">
-        <i class="fa-solid fa-house secondary" [class.active]="isSelected === 'home'"></i>
-        <span class="secondary mt-1" [class.active]="isSelected === 'home'">Ínicio</span>
+        <i class="fa-solid fa-house secondary" [class.active]="(currentRoute$ | async) === 'home'"></i>
+        <span class="secondary mt-1" [class.active]="(currentRoute$ | async) === 'home'">Ínicio</span>
       </button>
     </div>
     <div class="cart-container d-flex align-items-center gap-2">
+      @if ((countCart$ | async) ?? 0; as total) {
+      @if (total > 0) {
       <span class="count text-white">
-        <small>
-        {{ countCart }}
-      </small>
-    </span>
+        {{ total }}
+      </span>
+      }
+      }
       <button class="d-flex flex-column align-items-center" (click)="selectButton('cart')">
-        <i class="fa-solid fa-cart-shopping secondary" [class.active]="isSelected === 'cart'"></i>
-        <span class="secondary mt-1" [class.active]="isSelected === 'cart'">Carrinho</span>
+        <i class="fa-solid fa-cart-shopping secondary" [class.active]="(currentRoute$ | async) === 'cart'"></i>
+        <span class="secondary mt-1" [class.active]="(currentRoute$ | async) === 'cart'">Carrinho</span>
       </button>
     </div>
     <div class="d-flex align-items-center gap-2">
       <button class="d-flex flex-column align-items-center" (click)="selectButton('user-profile')">
-        <i class="fa-solid fa-user secondary" [class.active]="isSelected === 'user-profile'"></i>
-        <span class="secondary mt-1" [class.active]="isSelected === 'user-profile'">Conta</span>
+        <i class="fa-solid fa-user secondary" [class.active]="(currentRoute$ | async) === 'user-profile'"></i>
+        <span class="secondary mt-1" [class.active]="(currentRoute$ | async) === 'user-profile'">Conta</span>
       </button>
     </div>
 
   </div>
 </nav>
+} @else {
+
+}

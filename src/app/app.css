@@ -1,0 +1,6 @@
+main {
+    flex: 1;
+    overflow-x: auto;
+    padding: calc(16px + 82px) 24px 16px;
+    padding-bottom: calc(16px + 4.75rem + env(safe-area-inset-bottom, 0px));
+  }

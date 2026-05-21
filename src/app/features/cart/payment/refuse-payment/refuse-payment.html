@@ -1,0 +1,72 @@
+<main>
+    <div>
+        <section class="container-info">
+            <div>
+                <p class="m-0">
+                    <strong>
+                        STATUS
+                    </strong>
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="primary m-0">
+                        Cancelado
+                    </h4>
+                    <div class="warning">
+                        <span>
+                            Pagamento recusado
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="msg bg-light-red mt-3">
+                <div class="refuse">
+                    <i class="fa-solid fa-xmark light-primary"></i>
+                </div>
+                <p class="m-0 light-primary">
+                    Pagamento recusado pelo gateway. O pedido foi cancelado automaticamente.
+                </p>
+            </div>
+        </section>
+
+        <section class="container-info mt-3">
+            <div>
+                
+                <div class="subtotal d-flex flex-column gap-2 pb-2">
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            <strong>Itens do pedido</strong>
+                        </span>
+                    </div>
+                    @for (item of itemsRecusados; track item.id) {
+                        <div class="d-flex justify-content-between">
+                            <span>
+                                {{ item.quantity }}× {{ item.name }}
+                            </span>
+                            <span>
+                                {{ item.price | currency: 'BRL' }}
+                            </span>
+                        </div>
+                    }
+                    </div>
+    
+                <div class="pt-2 d-flex justify-content-between">
+                    <span>
+                        <strong>
+                            Total
+                        </strong>
+                    </span>
+                    <span class="primary">
+                        <strong>
+                            {{ (totalRefused$ | async) | currency: 'BRL'}}
+                        </strong>
+                    </span>
+                </div>
+                <p class="m-0 text-muted">
+                    Unidade: BA - Salvador (Barra) · Canal: App
+                </p>
+            </div>
+        </section>
+    </div>
+</main>

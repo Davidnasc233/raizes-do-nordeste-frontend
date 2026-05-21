@@ -1,16 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Observable } from 'rxjs';
+import { NavigationService } from '../../services/navigation.service';
+import { AsyncPipe } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  styleUrl: './nav-bar.component.css',
 })
-export class NavBarComponent {
-
+export class NavBarComponent implements OnInit {
   hasNotification = false;
+  currentRoute$!: Observable<string>;
+  orderId: string = 'PEDS1DMX';
 
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+    private navigationService: NavigationService,
+  ) {}
+
+  ngOnInit(): void {
+    this.currentRoute$ = this.navigationService.selectedRoute$;
+  }
+
+  redirectTo() {
+    const url = this.router.url;
+
+    if (url.includes('refuse-payment')) {
+      this.cartService.clearCart();
+    }
+    return this.router.navigateByUrl('/home');
+  }
 
   toggleNotification(): void {
     this.hasNotification = !this.hasNotification;

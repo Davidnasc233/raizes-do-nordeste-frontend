@@ -38,6 +38,7 @@ export const BAHIA_COMMON_ITEMS: MenuItem[] = [
     id: 5,
     name: 'Acarajé',
     image: 'images/acaraje.jpg',
+    tag: 'ESPECIALIDADE LOCAL',
     description:
       'Bolinho de feijão frito no dendê, recheado com vatapá, caruru, salada e camarão seco.',
     price: 8,

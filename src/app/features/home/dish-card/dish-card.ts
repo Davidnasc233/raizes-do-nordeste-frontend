@@ -3,6 +3,8 @@ import { RestaurantAddressService } from '../../../services/restaurant-address.s
 import { combineLatest, map, Observable, Subject, takeUntil } from 'rxjs';
 import { MenuItem } from '../../../models/restaurant-models';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CartService } from '../../../services/cart.service';
+import { ToastService } from '../../../services/toast.service';
 
 export interface RestaurantUnit {
     id: number;
@@ -23,7 +25,11 @@ export class DishCard implements OnInit, OnDestroy {
     filteredRecipes$!: Observable<MenuItem[] | null>;
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private readonly restaurantAddressService: RestaurantAddressService) {}
+    constructor(
+        private readonly restaurantAddressService: RestaurantAddressService,
+        private cartService: CartService,
+        private toastService: ToastService
+    ) {}
 
     ngOnInit() {
         this.restaurantAddressService.getData().subscribe((data) => {
@@ -49,5 +55,16 @@ export class DishCard implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    addToCart(item: MenuItem) {
+        const itemToAdd = {
+            id: item.id,
+            image: item.image,
+            name: item.name,
+            price: item.price ?? 0
+        }
+        this.toastService.show(`${item.name} adicionado ao carrinho`, 'success')
+        this.cartService.addToCart(itemToAdd)
     }
 }

@@ -5,10 +5,17 @@
         </span>
     </section>
 
-    @if (cart.length === 0) {
+    @if (cartItems$ | async; as items) {
+
+    @if (items.length === 0) {
     <app-no-item-cart></app-no-item-cart>
     } @else {
-        <app-cart-items [data]="cart"></app-cart-items>
-        <app-payment></app-payment>
+    <app-cart-items [data]="items" (increase)="cartService.increaseQuantity($event)"
+        (decrease)="cartService.decreaseQuantity($event)" (clear)="cartService.clearCart()">
+    </app-cart-items>
+    <app-payment [data]="items"></app-payment>
+    }
+    } @else {
+    <p>Carregando carrinho...</p>
     }
 </main>

@@ -4,18 +4,26 @@
     <div class="d-flex">
         <div class="image">
             <img src="{{item.image}}" alt="dishes">
-            
+
         </div>
 
 
         <div class="resume d-flex flex-column justify-content-between ms-2 w-100">
 
             <div class="d-flex flex-column">
-                <p class="m-0 color-custom">
-                    <strong>
-                        {{ item.name }}
-                    </strong>
-                </p>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <p class="m-0 color-custom">
+                        <strong>
+                            {{ item.name }}
+                        </strong>
+                    </p>
+
+                    <span class="m-0 tag" *ngIf="item.tag">
+                        <strong>
+                            {{ item.tag }}
+                        </strong>
+                    </span>
+                </div>
 
                 <span class="color-muted">
                     {{ item.description }}
@@ -31,7 +39,7 @@
                     </div>
                 </div>
 
-                <button class="custom-button">
+                <button class="custom-button" (click)="addToCart(item)">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>

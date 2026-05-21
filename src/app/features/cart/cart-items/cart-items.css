@@ -5,6 +5,16 @@
   padding: 12px 12px;
 }
 
+.clean-cart:hover {
+  & .fa-trash {
+    color: var(--color-primary) !important;
+  }
+
+  small {
+    color: var(--color-primary) !important;
+  }
+}
+
 .image {
   max-width: 74px;
   height: 74px;
@@ -50,5 +60,6 @@ i {
 }
 
 .fa-trash {
-    font-size: 1rem;
+  font-size: 0.9rem;
+  margin: 0;
 }
