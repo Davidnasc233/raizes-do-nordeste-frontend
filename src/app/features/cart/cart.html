@@ -13,7 +13,7 @@
     <app-cart-items [data]="items" (increase)="cartService.increaseQuantity($event)"
         (decrease)="cartService.decreaseQuantity($event)" (clear)="cartService.clearCart()">
     </app-cart-items>
-    <app-payment></app-payment>
+    <app-payment [data]="items"></app-payment>
     }
     } @else {
     <p>Carregando carrinho...</p>

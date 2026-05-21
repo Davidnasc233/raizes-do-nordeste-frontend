@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CartService } from '../../../services/cart.service';
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { ICartItem } from '../../../models/cart-item.model';
 
 @Component({
   selector: 'app-payment',
@@ -12,8 +13,9 @@ import { Router } from '@angular/router';
 })
 export class Payment implements OnInit {
   totalValue$!: Observable<number>;
-  deliveryFee: number = 7.9;
+  deliveryFee: number = 7.9; 
   totalPayment$!: Observable<number>;
+  @Input() data: ICartItem[] = [];
 
   constructor(
     private cartService: CartService,
@@ -28,7 +30,9 @@ export class Payment implements OnInit {
   }
 
   redirectRefusePayment() {
-    this.router.navigate(['/cart/refuse-payment']);
+    this.router.navigate(['/cart/refuse-payment'], {
+      state: { cartData: this.data }
+    });
   }
 
   getTotalValue() {

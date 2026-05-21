@@ -1,6 +1,6 @@
 <nav class="nav-container my-0">
   <div class="d-flex align-items-center justify-content-between items">
-    @if (currentRoute !== 'cart') {
+    @if (!(currentRoute$ | async)?.includes('cart')) {
     <div class="d-flex align-items-center gap-2">
       <img src="images/logo.png" alt="logo" class="logo radius-8" />
       <div class="d-flex flex-column">
@@ -24,9 +24,16 @@
         </button>
 
         <div>
-          <p class="m-0">
-            <strong>Carrinho</strong>
-          </p>
+          @if ((currentRoute$ | async)?.includes('refuse-payment')) {
+            <p class="m-0 fs-5">
+              <strong>Pedido {{ orderId }}</strong>
+            </p>
+          } 
+          @else {
+            <p class="m-0 fs-5">
+              <strong>Carrinho</strong>
+            </p>
+          }
         </div>
       </div>
     </div>

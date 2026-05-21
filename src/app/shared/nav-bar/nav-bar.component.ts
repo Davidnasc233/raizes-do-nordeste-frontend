@@ -1,29 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, Observable } from 'rxjs';
+import { NavigationService } from '../../services/navigation.service';
+import { AsyncPipe } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css',
 })
 export class NavBarComponent implements OnInit {
   hasNotification = false;
-  currentRoute: string = '';
+  currentRoute$!: Observable<string>;
+  orderId: string = 'PEDS1DMX';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+    private navigationService: NavigationService,
+  ) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      const firstSegment = this.router.routerState.snapshot.root.firstChild?.routeConfig?.path;
-      this.currentRoute = firstSegment === '' ? 'home' : firstSegment || '';
-    });
+    this.currentRoute$ = this.navigationService.selectedRoute$;
   }
 
   redirectTo() {
-    this.router.navigateByUrl('/home')
+    const url = this.router.url;
+
+    if (url.includes('refuse-payment')) {
+      this.cartService.clearCart();
+    }
+    return this.router.navigateByUrl('/home');
   }
 
   toggleNotification(): void {

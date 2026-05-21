@@ -21,6 +21,7 @@ i {
 :root {
   --color-primary: #ac3d33; /* Vermelho Terracota */
   --darker-primary: #882a20; /* Vermelho escuro */
+  --light-primary: #e7000b; /* Vermelho claro */
   --secondary: #ede6d9; /* Creme / Bege claro */
   --accent: #e3a668; /* Ouro envelhecido / Âmbar */
   --background: #faf8f2; /* Off-white quente */
@@ -33,6 +34,8 @@ i {
 
 /* Cores de Texto */
 .primary { color: var(--color-primary); }
+.darker-primary { color: var(--darker-primary); }
+.light-primary { color: var(--light-primary); }
 .secondary { color: var(--secondary); }
 .accent { color: var(--accent); }
 .text-success { color: var(--success); }
@@ -42,6 +45,8 @@ i {
 
 /* Cores de Fundo */
 .bg-primary-red { background-color: var(--color-primary); }
+.bg-darker-red { background-color: var(--darker-primary); }
+.bg-light-red { background-color: rgb(from var(--light-primary) r g b / 10%); }
 .bg-secondary-bege { background-color: var(--secondary); }
 .bg-background { background-color: var(--background); }
 .bg-success-green { background-color: var(--success); }

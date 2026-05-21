@@ -1,4 +1,4 @@
-@if ((currentRoute$ | async) !== 'cart') {
+@if (!(currentRoute$ | async)?.includes('cart')) {
 <nav class="nav-container my-0">
   <div class="d-flex align-items-center justify-content-between items">
     <div class="d-flex align-items-center">
@@ -9,11 +9,11 @@
     </div>
     <div class="cart-container d-flex align-items-center gap-2">
       @if ((countCart$ | async) ?? 0; as total) {
-        @if (total > 0) {
-          <span class="count text-white">
-            {{ total }}
-          </span>
-        }
+      @if (total > 0) {
+      <span class="count text-white">
+        {{ total }}
+      </span>
+      }
       }
       <button class="d-flex flex-column align-items-center" (click)="selectButton('cart')">
         <i class="fa-solid fa-cart-shopping secondary" [class.active]="(currentRoute$ | async) === 'cart'"></i>
