@@ -2,24 +2,31 @@ import { Component, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { LgpdModalComponent } from './shared/lgpd-modal/lgpd-modal';
-import { NavMenuComponent } from "./shared/nav-menu/nav-menu.component";
-import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
+import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { ToastService } from './services/toast.service';
 import { CommonModule } from '@angular/common';
 import { ToastModalComponent } from './shared/toast/toast-modal.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, HomeComponent, LgpdModalComponent, NavMenuComponent, NavBarComponent, CommonModule, ToastModalComponent],
+  imports: [
+    RouterOutlet,
+    LgpdModalComponent,
+    NavMenuComponent,
+    NavBarComponent,
+    CommonModule,
+    ToastModalComponent,
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('frontend');
 
   constructor(
     private router: Router,
-    public toastService: ToastService
+    public toastService: ToastService,
   ) {}
 
   ngOnInit() {
