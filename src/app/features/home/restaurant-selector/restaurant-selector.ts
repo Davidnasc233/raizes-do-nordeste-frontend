@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { RestaurantAddressService } from '../../../services/restaurant-address.service';
+import { CartService } from '../../../services/cart.service';
+import { RestaurantUnit } from '../../../models/restaurant-models';
 
 @Component({
     selector: 'app-restaurant-selector',
@@ -17,7 +19,9 @@ export class RestaurantSelector implements OnInit {
     selectedRestaurant: any = null;
 
     constructor(
-      private readonly restaurantAddressService: RestaurantAddressService) {
+      private readonly restaurantAddressService: RestaurantAddressService,
+      private cartService: CartService
+    ) {
         this.unit$ = this.restaurantAddressService.selectedUnit$;
     }
 
@@ -33,9 +37,10 @@ export class RestaurantSelector implements OnInit {
         this.menuOpen = !this.menuOpen;
     }
 
-    selectUnit(unit: any) {
+    selectUnit(unit: RestaurantUnit) {
         this.restaurantAddressService.selectRestaurant(unit);
         this.selectedRestaurant = unit;
         this.menuOpen = false;
+        this.cartService.clearCart();
     }
 }

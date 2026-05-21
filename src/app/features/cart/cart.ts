@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { ICartItem } from '../../models/cart-item.model';
 import { CartService } from '../../services/cart.service';
 import { AsyncPipe } from '@angular/common';
+import { RestaurantUnit } from '../../models/restaurant-models';
+import { RestaurantAddressService } from '../../services/restaurant-address.service';
 
 @Component({
   selector: 'app-cart',
@@ -15,14 +17,16 @@ import { AsyncPipe } from '@angular/common';
 })
 export class Cart implements OnInit {
   cartItems$!: Observable<ICartItem[]>;
-  selectedUnit: string = 'Ba - Salvador';
+  selectedUnit$!: Observable<RestaurantUnit | null>;
 
   constructor(
     public cartService: CartService,
+    private restaurantAddressService: RestaurantAddressService
   ) {}
 
   ngOnInit(): void {
     this.cartItems$ = this.cartService.items$;
+    this.selectedUnit$ = this.restaurantAddressService.selectedUnit$;
   }
 
   

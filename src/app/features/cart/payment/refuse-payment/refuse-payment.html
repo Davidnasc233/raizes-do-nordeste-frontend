@@ -64,7 +64,7 @@
                     </span>
                 </div>
                 <p class="m-0 text-muted">
-                    Unidade: BA - Salvador (Barra) · Canal: App
+                    Unidade: {{ (selectedUnit$ | async)?.name }} · Canal: App
                 </p>
             </div>
         </section>
