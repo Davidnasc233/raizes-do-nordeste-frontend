@@ -1,7 +1,7 @@
 <main class="main">
     <section>
         <span class="color-custom">
-            <small>Pedido para <strong>{{ selectedUnit }}</strong></small>
+            <small>Pedido para <strong>{{ (selectedUnit$ | async)?.name }}</strong></small>
         </span>
     </section>
 

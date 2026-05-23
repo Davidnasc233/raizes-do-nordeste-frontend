@@ -9,15 +9,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './choose-restaurant-modal.css',
 })
 export class ChooseRestaurantModal {
-  unit: any [] = [];
+  unit: any[] = [];
   selectedUnit: any = null;
-  
-  constructor(
-    private restaurantAddressService: RestaurantAddressService
-  ) {}
+
+  constructor(private restaurantAddressService: RestaurantAddressService) {}
 
   ngOnInit() {
-    this.restaurantAddressService.getData().subscribe( data => {
+    this.restaurantAddressService.getData().subscribe((data) => {
       this.unit = data.unit;
       this.selectedUnit = this.unit[0] ?? null;
     });
