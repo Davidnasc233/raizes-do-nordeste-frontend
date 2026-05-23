@@ -30,8 +30,20 @@ export class Payment implements OnInit {
   }
 
   redirectRefusePayment() {
-    this.router.navigate(['/cart/refuse-payment'], {
-      state: { cartData: this.data }
+    this.router.navigate(['/cart/payment-status'], {
+      state: { 
+        cartData: this.data,
+        paymentStatus: 'refused'
+      }
+    });
+  }
+
+  redirectAcceptedPayment() {
+    this.router.navigate(['/cart/payment-status'], {
+      state: { 
+        cartData: this.data,
+        paymentStatus: 'accepted'
+      }
     });
   }
 

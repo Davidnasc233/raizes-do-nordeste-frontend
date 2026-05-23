@@ -1,0 +1,114 @@
+.container-info {
+    background-color: var(--secondary);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.subtotal {
+    border-bottom: 1px solid var(--color-muted);
+  }
+
+.msg {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-radius: 12px;
+
+    .refuse{
+        border: 2px solid var(--light-primary);
+        padding: 0 6px;
+        margin-right: 8px;
+        border-radius: 50%;
+        i {
+            font-size: 0.6rem;
+        }
+
+    }
+    p {
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+}
+
+.icon-container {
+    background-color: var(--disabled);
+    color: var(--color-text);
+    padding: 8px 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+    i {
+        font-size: 1rem;
+    }
+}
+
+.warning {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    padding: 8px;
+    background-color: var(--light-primary);
+    border-radius: 12px;
+}
+
+.success {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    padding: 8px;
+    background-color: var(--success);
+    border-radius: 12px;
+}
+
+.step {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.status-label {
+    margin: 0;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.status-subtitle {
+    font-size: 12px;
+}
+
+.step.completed .icon-container {
+    background-color: #b84a24;
+    color: #ffffff;
+}
+
+.step.active .icon-container {
+    background-color: #af6568;
+    color: #ffffff;
+    box-shadow: 0 0 0 5px rgba(184, 74, 36, 0.4);
+    animation: pulse-animation 2s infinite ease-in-out;
+}
+
+step.pending .icon-container {
+    background-color: #f3e5d8;
+    color: #b84a24;
+}
+  
+@keyframes pulse-animation {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(184, 74, 36, 0.4);
+    }
+    50% {
+        transform: scale(1);
+        background-color: var(--color-primary);
+        box-shadow: 0 0 0 5px rgba(184, 74, 36, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(184, 74, 36, 0.4);
+    }
+}

@@ -24,7 +24,7 @@
         </button>
 
         <div>
-          @if ((currentRoute$ | async)?.includes('refuse-payment')) {
+          @if ((currentRoute$ | async)?.includes('payment-status')) {
             <p class="m-0 fs-5">
               <strong>Pedido {{ orderId }}</strong>
             </p>

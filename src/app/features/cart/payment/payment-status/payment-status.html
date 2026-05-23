@@ -1,0 +1,114 @@
+<main>
+    <div>
+        <section class="container-info">
+            @if (orderStatus === 'refused') {
+            <div>
+                <p class="m-0">
+                    <strong>
+                        STATUS
+                    </strong>
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="primary m-0">
+                        Cancelado
+                    </h4>
+                    <div class="warning">
+                        <span>
+                            Pagamento recusado
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="msg bg-light-red mt-3">
+                <div class="refuse">
+                    <i class="fa-solid fa-xmark light-primary"></i>
+                </div>
+                <p class="m-0 light-primary">
+                    Pagamento recusado pelo gateway. O pedido foi cancelado automaticamente.
+                </p>
+            </div>
+            } @else {
+            <div>
+                <p class="m-0">
+                    <strong>
+                        STATUS
+                    </strong>
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="primary m-0">
+                        Recebido
+                    </h3>
+                    <div class="success">
+                        <span>
+                            Pagamento: Aprovado
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            @for (step of statusSteps; track step.id) {
+            <div class="step gap-3 py-2" [ngClass]="{
+                            'completed': step.isCompleted, 
+                            'active': step.isActive,
+                            'pending': !step.isCompleted && !step.isActive
+                        }">
+                <div class="icon-container">
+                    <i class="fa-solid" [ngClass]="step.iconClass"></i>
+                </div>
+                <div>
+                    <p class="status-label m-0 p-0">
+                        {{ step.label }}
+                    </p>
+                    @if (step.isActive && step.subtitle) {
+                    <small class="text-muted status-subtitle">
+                        {{ step?.subtitle}}
+                    </small>
+                    }
+                </div>
+            </div>
+            }
+            }
+        </section>
+
+        <section class="container-info mt-3">
+            <div>
+
+                <div class="subtotal d-flex flex-column gap-2 pb-2">
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            <strong>Itens do pedido</strong>
+                        </span>
+                    </div>
+                    @for (item of items; track item.id) {
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            {{ item.quantity }}× {{ item.name }}
+                        </span>
+                        <span>
+                            {{ item.price | currency: 'BRL' }}
+                        </span>
+                    </div>
+                    }
+                </div>
+
+                <div class="pt-2 d-flex justify-content-between">
+                    <span>
+                        <strong>
+                            Total
+                        </strong>
+                    </span>
+                    <span class="primary">
+                        <strong>
+                            {{ (total$ | async) | currency: 'BRL'}}
+                        </strong>
+                    </span>
+                </div>
+                <p class="m-0 text-muted">
+                    Unidade: {{ (selectedUnit$ | async)?.name }} · Canal: App
+                </p>
+            </div>
+        </section>
+    </div>
+</main>

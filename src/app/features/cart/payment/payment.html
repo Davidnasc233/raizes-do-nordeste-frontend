@@ -55,7 +55,9 @@
                 </span>
             </button>
             <button
-                class="d-flex align-items-center justify-content-center gap-1 btn-pay btn-custom bg-primary-red secondary">
+                class="d-flex align-items-center justify-content-center gap-1 btn-pay btn-custom bg-primary-red secondary"
+                (click)="redirectAcceptedPayment()"
+                >
                 <i class="fa-regular fa-credit-card"></i>
                 <span class="pay">
                     <strong>
