@@ -14,7 +14,7 @@ import { OrderStatusStep } from './interface/order-status-step.interface';
   templateUrl: './payment-status.html',
   styleUrls: ['./payment-status.css'],
 })
-export class RefusePaymentComponent implements OnInit, OnDestroy {
+export class PaymentStatusComponent implements OnInit, OnDestroy {
   items: ICartItem[] = [];
   total$!: Observable<number>;
   selectedUnit$!: Observable<RestaurantUnit | null>;

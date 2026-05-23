@@ -30,7 +30,7 @@ export class NavBarComponent implements OnInit {
   redirectTo() {
     const url = this.router.url;
 
-    if (url.includes('refuse-payment')) {
+    if (url.includes('payment-status')) {
       this.cartService.clearCart();
     }
     return this.router.navigateByUrl('/home');

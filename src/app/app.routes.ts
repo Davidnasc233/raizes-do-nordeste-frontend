@@ -2,11 +2,11 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { Cart } from './features/cart/cart';
 import { UserProfile } from './features/user-profile/user-profile';
-import { RefusePaymentComponent } from './features/cart/payment/payment-status/payment-status';
+import { PaymentStatusComponent } from './features/cart/payment/payment-status/payment-status';
 
 export const routes: Routes = [
   { path: 'cart', component: Cart },
-  { path: 'cart/payment-status', component: RefusePaymentComponent },
+  { path: 'cart/payment-status', component: PaymentStatusComponent },
   { path: 'user-profile', component: UserProfile },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
