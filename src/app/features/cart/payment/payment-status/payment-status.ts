@@ -2,8 +2,7 @@ import { AsyncPipe, CommonModule, CurrencyPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ICartItem } from '../../../../models/cart-item.model';
 import { Router } from '@angular/router';
-import { CartService } from '../../../../services/cart.service';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RestaurantAddressService } from '../../../../services/restaurant-address.service';
 import { RestaurantUnit } from '../../../../models/restaurant-models';
 import { OrderStatusStep } from './interface/order-status-step.interface';
@@ -16,7 +15,9 @@ import { OrderStatusStep } from './interface/order-status-step.interface';
 })
 export class PaymentStatusComponent implements OnInit, OnDestroy {
   items: ICartItem[] = [];
-  total$!: Observable<number>;
+  subtotal = 0;
+  total = 0;
+  readonly deliveryFee = 7.9;
   selectedUnit$!: Observable<RestaurantUnit | null>;
   orderStatus: string = '';
   private intervalId: any;
@@ -31,7 +32,6 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private cartService: CartService,
     private restaurantAddressService: RestaurantAddressService,
     private cdr: ChangeDetectorRef
   ) {
@@ -46,9 +46,8 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.total$ = this.cartService.totalValue$.pipe(
-      map(totalValue => totalValue)
-    );
+    this.subtotal = this.calculateItemsTotal(this.items);
+    this.total = this.subtotal + this.deliveryFee;
     this.startOrderSimulation();
   }
 
@@ -93,5 +92,9 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
       }
     });
     this.cdr.detectChanges();
+  }
+
+  private calculateItemsTotal(items: ICartItem[]): number {
+    return items.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 }

@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ICartItem } from '../models/cart-item.model';
+import { IOrder, OrderStatus } from '../models/order.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+  private readonly ORDERS_STORAGE_KEY = 'orders';
   private mockCart: ICartItem[] = [];
+  private ordersSubject = new BehaviorSubject<IOrder[]>(this.loadOrders());
 
   private cartItemsSubject: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(this.mockCart);
+  private latestOrderCodeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  get latestOrderCode$(): Observable<string> {
+    return this.latestOrderCodeSubject.asObservable();
+  }
 
   constructor() {}
 
@@ -26,6 +34,10 @@ export class CartService {
     return this.items$.pipe(
       map(items => items.reduce((sum, item) => sum + (item.price * item.quantity), 0))
     );
+  }
+
+  get orders$(): Observable<IOrder[]> {
+    return this.ordersSubject.asObservable();
   }
 
   addToCart(product: Omit<ICartItem, 'quantity'>): void {
@@ -76,5 +88,69 @@ export class CartService {
 
   clearCart(): void {
     this.updateCart([]);
+  }
+
+  createOrder(status: OrderStatus, items: ICartItem[] = this.cartItemsSubject.value): IOrder {
+    const order: IOrder = {
+      id: this.generateOrderId(),
+      orderCode: this.generateOrderCode(),
+      status,
+      items: this.cloneItems(items),
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedOrders = [order, ...this.ordersSubject.value];
+    this.ordersSubject.next(updatedOrders);
+    this.latestOrderCodeSubject.next(order.orderCode);
+    this.saveOrders(updatedOrders);
+
+    return order;
+  }
+
+  getLatestOrderByStatus(status: OrderStatus): IOrder | null {
+    return this.ordersSubject.value.find(order => order.status === status) ?? null;
+  }
+
+  private loadOrders(): IOrder[] {
+    const storedOrders = localStorage.getItem(this.ORDERS_STORAGE_KEY);
+
+    if (!storedOrders) {
+      return [];
+    }
+
+    try {
+      const parsedOrders = JSON.parse(storedOrders) as IOrder[];
+      return Array.isArray(parsedOrders) ? parsedOrders : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private saveOrders(orders: IOrder[]): void {
+    localStorage.setItem(this.ORDERS_STORAGE_KEY, JSON.stringify(orders));
+  }
+
+  private cloneItems(items: ICartItem[]): ICartItem[] {
+    return items.map(item => ({ ...item }));
+  }
+
+  private generateOrderId(): string {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+
+    return `${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+  }
+
+  private generateOrderCode(): string {
+    const caracteres = "23456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
+    let randomPart = "";
+    
+    for (let i = 0; i < 5; i++) {
+      const indexAleatorio = Math.floor(Math.random() * caracteres.length);
+      randomPart += caracteres.charAt(indexAleatorio);
+    }
+
+    return `PED${randomPart}`;
   }
 }

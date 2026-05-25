@@ -15,7 +15,7 @@ import { CartService } from '../../services/cart.service';
 export class NavBarComponent implements OnInit {
   hasNotification = false;
   currentRoute$!: Observable<string>;
-  orderId: string = 'PEDS1DMX';
+  orderCode$!: Observable<string>;
 
   constructor(
     private router: Router,
@@ -25,6 +25,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute$ = this.navigationService.selectedRoute$;
+    this.orderCode$ = this.cartService.latestOrderCode$;
   }
 
   redirectTo() {

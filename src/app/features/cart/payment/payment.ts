@@ -4,6 +4,7 @@ import { CartService } from '../../../services/cart.service';
 import { AsyncPipe, CurrencyPipe, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { ICartItem } from '../../../models/cart-item.model';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-payment',
@@ -21,6 +22,7 @@ export class Payment implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -31,10 +33,14 @@ export class Payment implements OnInit {
   }
 
   redirectRefusePayment() {
+    const refusedOrder = this.cartService.createOrder('refused', this.data);
+    this.cartService.clearCart();
+    
     this.router.navigate(['/cart/payment-status'], {
       state: {
         cartData: this.data,
         paymentStatus: 'refused',
+        order: refusedOrder,
       },
     });
   }
@@ -43,11 +49,15 @@ export class Payment implements OnInit {
     this.isLoading = true;
 
     setTimeout(() => {
+      const acceptedOrder = this.cartService.createOrder('accepted', this.data);
+      this.cartService.clearCart();
+
       this.router
         .navigate(['/cart/payment-status'], {
           state: {
             cartData: this.data,
             paymentStatus: 'accepted',
+            order: acceptedOrder,
           },
         })
         .finally(() => {
