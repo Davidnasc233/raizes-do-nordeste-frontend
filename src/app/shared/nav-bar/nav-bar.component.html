@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center justify-content-between items">
     @if (!(currentRoute$ | async)?.includes('cart')) {
     <div class="d-flex align-items-center gap-2">
-      <img src="images/logo.png" alt="logo" class="logo radius-8" />
+      <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToHome()"/>
       <div class="d-flex flex-column">
       </div>
     </div>

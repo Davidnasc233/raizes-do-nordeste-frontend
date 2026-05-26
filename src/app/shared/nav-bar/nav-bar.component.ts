@@ -40,6 +40,11 @@ export class NavBarComponent implements OnInit {
     return this.router.navigateByUrl('/home');
   }
 
+  redirectToHome() {
+    const url = this.router.url;
+    return this.router.navigateByUrl('/home');
+  }
+
   toggleNotification(): void {
     this.hasNotification = !this.hasNotification;
   }
