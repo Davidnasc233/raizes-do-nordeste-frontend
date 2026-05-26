@@ -79,19 +79,43 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
   }
 
   startOrderSimulation() {
-    this.currentStepIndex = 0;
+    const lastOrder = this.cartService.lastOrderValue;
+    
+    if (lastOrder && lastOrder.deliveryStatus) {
+      const savedIndex = this.statusSteps.findIndex(
+        (step) => step.label.toLowerCase() === lastOrder.deliveryStatus.toLowerCase()
+      );
+  
+      if (savedIndex !== -1) {
+        if (savedIndex >= this.statusSteps.length - 1) {
+          this.currentStepIndex = savedIndex;
+          this.updateSteps(this.currentStepIndex);
+          this.statusSteps[savedIndex].isCompleted = true;
+          this.statusSteps[savedIndex].isActive = false;
+          this.cdr.detectChanges();
+          return;
+        }
+        
+        this.currentStepIndex = savedIndex;
+      } else {
+        this.currentStepIndex = 0;
+      }
+    } else {
+      this.currentStepIndex = 0;
+    }
+  
     this.updateSteps(this.currentStepIndex);
-
+  
     this.intervalId = setInterval(() => {
       this.currentStepIndex++;
-
+  
       if (this.currentStepIndex < this.statusSteps.length) {
         this.updateSteps(this.currentStepIndex);
       } else {
         this.statusSteps[this.currentStepIndex - 1].isCompleted = true;
         this.statusSteps[this.currentStepIndex - 1].isActive = false;
         this.cartService.updateLastOrderStatus(this.statusSteps[this.statusSteps.length - 1].label);
-      
+        
         clearInterval(this.intervalId);
         this.cdr.detectChanges();
       }
