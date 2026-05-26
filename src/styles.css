@@ -48,7 +48,7 @@ i {
 .bg-darker-red { background-color: var(--darker-primary); }
 .bg-light-red { background-color: rgb(from var(--light-primary) r g b / 10%); }
 .bg-secondary-bege { background-color: var(--secondary); }
-.bg-disabled-color { background-color: var(--disabled); };
+.bg-disabled-color { background-color: var(--disabled); }
 .bg-background { background-color: var(--background); }
 .bg-success-green { background-color: var(--success); }
 .bg-foreground { background-color: var(--foreground); }

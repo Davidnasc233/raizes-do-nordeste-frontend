@@ -4,14 +4,16 @@ import { ICartItem } from '../models/cart-item.model';
 import { IOrder, OrderStatus } from '../models/order.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
   private readonly ORDERS_STORAGE_KEY = 'orders';
   private mockCart: ICartItem[] = [];
   private ordersSubject = new BehaviorSubject<IOrder[]>(this.loadOrders());
 
-  private cartItemsSubject: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(this.mockCart);
+  private cartItemsSubject: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(
+    this.mockCart,
+  );
   private latestOrderCodeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   get latestOrderCode$(): Observable<string> {
@@ -25,14 +27,12 @@ export class CartService {
   }
 
   get totalItems$(): Observable<number> {
-    return this.items$.pipe(
-      map(items => items.reduce((sum, item) => sum + item.quantity, 0))
-    );
+    return this.items$.pipe(map((items) => items.reduce((sum, item) => sum + item.quantity, 0)));
   }
 
   get totalValue$(): Observable<number> {
     return this.items$.pipe(
-      map(items => items.reduce((sum, item) => sum + (item.price * item.quantity), 0))
+      map((items) => items.reduce((sum, item) => sum + item.price * item.quantity, 0)),
     );
   }
 
@@ -42,7 +42,7 @@ export class CartService {
 
   addToCart(product: Omit<ICartItem, 'quantity'>): void {
     const currentItems = this.cartItemsSubject.value;
-    const existingItem = currentItems.find(item => item.id === product.id);
+    const existingItem = currentItems.find((item) => item.id === product.id);
 
     if (existingItem) {
       this.increaseQuantity(product.id);
@@ -54,13 +54,13 @@ export class CartService {
 
   removeFromCart(id: number): void {
     const currentItems = this.cartItemsSubject.value;
-    const updatedCart = currentItems.filter(item => item.id !== id);
+    const updatedCart = currentItems.filter((item) => item.id !== id);
     this.updateCart(updatedCart);
   }
 
   increaseQuantity(id: number): void {
     const currentItems = this.cartItemsSubject.value;
-    const updatedCart = currentItems.map(item => {
+    const updatedCart = currentItems.map((item) => {
       if (item.id === id) {
         return { ...item, quantity: item.quantity + 1 };
       }
@@ -71,12 +71,14 @@ export class CartService {
 
   decreaseQuantity(id: number): void {
     const currentItems = this.cartItemsSubject.value;
-    const updatedCart = currentItems.map(item => {
-      if (item.id === id) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    }).filter(item => item.quantity > 0);
+    const updatedCart = currentItems
+      .map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: item.quantity - 1 };
+        }
+        return item;
+      })
+      .filter((item) => item.quantity > 0);
 
     this.updateCart(updatedCart);
   }
@@ -95,6 +97,7 @@ export class CartService {
       id: this.generateOrderId(),
       orderCode: this.generateOrderCode(),
       status,
+      deliveryStatus: 'Recebido',
       items: this.cloneItems(items),
       createdAt: new Date().toISOString(),
     };
@@ -108,7 +111,7 @@ export class CartService {
   }
 
   getLatestOrderByStatus(status: OrderStatus): IOrder | null {
-    return this.ordersSubject.value.find(order => order.status === status) ?? null;
+    return this.ordersSubject.value.find((order) => order.status === status) ?? null;
   }
 
   private loadOrders(): IOrder[] {
@@ -131,7 +134,7 @@ export class CartService {
   }
 
   private cloneItems(items: ICartItem[]): ICartItem[] {
-    return items.map(item => ({ ...item }));
+    return items.map((item) => ({ ...item }));
   }
 
   private generateOrderId(): string {
@@ -143,14 +146,44 @@ export class CartService {
   }
 
   private generateOrderCode(): string {
-    const caracteres = "23456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
-    let randomPart = "";
-    
+    const caracteres = '23456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
+    let randomPart = '';
+
     for (let i = 0; i < 5; i++) {
       const indexAleatorio = Math.floor(Math.random() * caracteres.length);
       randomPart += caracteres.charAt(indexAleatorio);
     }
 
     return `PED${randomPart}`;
+  }
+
+  updateLastOrderStatus(currentLabel: string) {
+    const currentOrders = this.ordersSubject.getValue();
+
+    if (currentOrders && currentOrders.length > 0) {
+      const updatedOrders = currentOrders.map((order, index) => {
+        if (index === 0) {
+          return {
+            ...order,
+            deliveryStatus: currentLabel,
+          };
+        }
+        return order;
+      });
+
+      this.ordersSubject.next(updatedOrders);
+      this.saveOrders(updatedOrders);
+    }
+  }
+
+  get lastOrder$(): Observable<IOrder | undefined> {
+    return this.orders$.pipe(
+      map(orders => orders.length > 0 ? orders[0] : undefined)
+    );
+  }
+
+  get lastOrderValue(): IOrder | undefined {
+    const orders = this.ordersSubject.getValue();
+    return orders.length > 0 ? orders[0] : undefined;
   }
 }

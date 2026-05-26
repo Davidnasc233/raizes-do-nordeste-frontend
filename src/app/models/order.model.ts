@@ -6,6 +6,7 @@ export interface IOrder {
   id: string;
   orderCode: string;
   status: OrderStatus;
+  deliveryStatus: string;
   items: ICartItem[];
   createdAt: string;
 }

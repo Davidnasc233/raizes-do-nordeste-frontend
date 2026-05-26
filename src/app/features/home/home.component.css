@@ -11,6 +11,23 @@
   flex: 1;
   min-height: 0;
 }
+.bg-success-green {
+  border-radius: 16px;
+  line-height: 1;
+
+  i {
+    color: var(--accent);
+    font-size: 1rem;
+  }
+
+  p {
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 0.7rem;
+  }
+}
 
 span {
   font-size: 0.6rem;
