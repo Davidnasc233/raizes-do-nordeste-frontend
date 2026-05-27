@@ -8,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class UserProfile {
 
+  get hasLgpdConsent(): boolean {
+    return localStorage.getItem('user_lgpd_consent') === 'true';
+  }
+  
+  revokeLgpdConsent(): void {
+    localStorage.removeItem('user_lgpd_consent');
+  }
 }

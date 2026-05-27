@@ -30,23 +30,26 @@
 
 <div class="bg-secondary-bege p-3 mt-3">
 
-    <div class="d-flex gap-2">
-        <i class="fa-solid fa-shield-halved"></i>
+    <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-shield-halved text-success"></i>
         <h5 class="m-0">
         Privacidade & LGPD
         </h5>
     </div>
 
     <span class="color-muted">
-        Status do consentimento: <strong>Aceito</strong>
+        Status do consentimento: 
+        <strong>
+            {{ hasLgpdConsent ? 'Concedido' : 'Não concedido' }}
+        </strong>
     </span>
 
     <div class="d-flex mt-3 gap-3">
-        <button class="btn bg-background color-muted px-3 w-100">
+        <button class="bg-background color-muted p-2 w-100" (click)="revokeLgpdConsent()">
             Revogar consentimento
         </button>
     
-        <button class="bg-primary-red px-3 w-100 d-flex justify-content-center align-items-center gap-2">
+        <button class="bg-primary-red p-2 w-100 d-flex justify-content-center align-items-center gap-2">
             <i class="fa-solid fa-trash"></i>
             Excluir meus dados
         </button>
