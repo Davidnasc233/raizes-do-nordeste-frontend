@@ -1,0 +1,8 @@
+.gateway-container {
+  border-radius: 16px;
+}
+
+.gateway,
+span {
+  font-size: 0.82rem;
+}

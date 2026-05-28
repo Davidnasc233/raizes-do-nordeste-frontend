@@ -55,10 +55,12 @@ i {
 .bg-accent { background-color: var(--accent); }
 
 /* Bordas e Raio */
-.border-primary { border: 1px solid var(--color-primary); }
+.border-primary-red { border: 1px solid var(--color-primary); }
+.border-disabled { border: 1px solid var(--disabled); }
 .rounded-main { border-radius: 0.875rem; }
 
 button {
   background: none;
   border: none;
 }
+
