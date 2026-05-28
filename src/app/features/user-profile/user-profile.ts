@@ -1,18 +1,28 @@
 import { Component } from '@angular/core';
+import { ValidateLgpdService } from '../../services/validate-lgpd-consent.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
 export class UserProfile {
+  hasAcceptedLgpd$!: Observable<boolean | null>;
 
-  get hasLgpdConsent(): boolean {
-    return localStorage.getItem('user_lgpd_consent') === 'true';
+  constructor(private validateLgpdService: ValidateLgpdService) {}
+
+  ngOnInit() {
+    this.hasAcceptedLgpd$ = this.validateLgpdService.lgpdConsent$;
   }
-  
+
   revokeLgpdConsent(): void {
-    localStorage.removeItem('user_lgpd_consent');
+    this.validateLgpdService.refuseLgpd();
+  }
+
+  deleteAllData() {
+    localStorage.clear();
   }
 }

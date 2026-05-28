@@ -1,4 +1,4 @@
-@if (!hasAccepted) {
+@if (!(hasAccepted$ | async)) {
 <div class="lgpd-container">
     <div class="lgpd-content">
         <div class="d-flex align-items-center gap-2">
