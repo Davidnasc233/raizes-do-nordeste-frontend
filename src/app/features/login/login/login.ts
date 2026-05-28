@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../services/toast.service';
+import { UserStorageService } from '../../../services/user-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,13 @@ export class Login {
   register: boolean = false;
   loginForm = new FormGroup({
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
-    name: new FormControl(''),
+    name: new FormControl('', { nonNullable: true }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
 
   constructor(
     private readonly router: Router,
+    private readonly userStorage: UserStorageService,
     private readonly toast: ToastService
   ) {}
 
@@ -31,23 +33,46 @@ export class Login {
     const formControl = this.loginForm.controls;
 
     if (this.register === true) {
-      this.onConfirmRegister(formControl);
+      this.onRegister(formControl);
     } else {
-      console.log('Login confirmado', this.loginForm.value);
+      this.onLogin();
     }
   }
 
   onForgotPassword() {
-    console.log('Recuperação de senha');
   }
 
-  onConfirmRegister(formControl: typeof this.loginForm.controls) {
+  onLogin() {
+    const user = this.userStorage.getCurrentUser();
+
+    if (!user) {
+      return this.toast.show('Nenhum usuário encontrado. Por favor, registre-se primeiro.', 'danger');
+    }
+
+    if (user.email === this.loginForm.controls.email.value && user.password === this.loginForm.controls.password.value) {
+      this.router.navigate(['/home']);
+    } else {
+      this.toast.show('Email ou senha incorretos. Tente novamente.', 'danger');
+    }
+
+  }
+
+  onRegister(formControl: typeof this.loginForm.controls) {
     
     if (formControl.name?.value === '') {
       return this.toast.show('O campo nome é obrigatório para cadastro', 'danger');
     }
 
-    console.log('Cadastro confirmado', this.loginForm.value);
+    this.userStorage.saveUser({
+      id: crypto.randomUUID(),
+      name: formControl.name.value,
+      email: formControl.email.value,
+      password: formControl.password.value,
+      points: 0,
+      ordersCount: 0,
+      updatedAt: new Date().toISOString()
+    });
+
   }
 
   validateFormControl(control: FormControl) {

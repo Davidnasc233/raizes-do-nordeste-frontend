@@ -42,6 +42,7 @@ export class UserProfile {
       id: 'user-001',
       name: 'Visitante Raizes',
       email: 'visitante@raizes.com',
+      password: 'password123',
       points: 120,
       ordersCount: 3,
       updatedAt: new Date().toISOString(),

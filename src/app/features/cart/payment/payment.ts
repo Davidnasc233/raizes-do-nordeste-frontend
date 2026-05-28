@@ -38,7 +38,7 @@ export class Payment implements OnInit {
   }
 
   redirectRefusePayment() {
-    if (this.user$ === null) {
+    if (this.user$ !== null) {
       const refusedOrder = this.cartService.createOrder('refused', this.data);
       this.cartService.clearCart();
 
@@ -57,7 +57,7 @@ export class Payment implements OnInit {
   redirectAcceptedPayment() {
     this.isLoading = true;
 
-    if (this.user$ === null) {
+    if (this.user$ !== null) {
       setTimeout(() => {
         const acceptedOrder = this.cartService.createOrder('accepted', this.data);
         this.cartService.clearCart();
