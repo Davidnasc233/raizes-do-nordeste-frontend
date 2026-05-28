@@ -22,8 +22,8 @@
     </div>
     <div class="d-flex align-items-center gap-2">
       <button class="d-flex flex-column align-items-center" (click)="selectButton('user-profile')">
-        <i class="fa-solid fa-user secondary" [class.active]="(currentRoute$ | async) === 'user-profile'"></i>
-        <span class="secondary mt-1" [class.active]="(currentRoute$ | async) === 'user-profile'">Conta</span>
+        <i class="fa-solid fa-user secondary" [class.active]="(currentRoute$ | async) === 'user-profile' || (currentRoute$ | async) === 'login'"></i>
+        <span class="secondary mt-1" [class.active]="(currentRoute$ | async) === 'user-profile' || (currentRoute$ | async) === 'login'">Conta</span>
       </button>
     </div>
 
