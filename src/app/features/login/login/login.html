@@ -5,14 +5,20 @@
     </span>
   </section>
 
-  <section class="d-flex flex-column gap-3 mt-3">
-    <input type="text" class="border-disabled color-muted py-2 px-3 rounded-main" placeholder="E-mail" />
-    <input type="password" class="border-disabled color-muted py-2 px-3 rounded-main" placeholder="Senha"/>
-    <button class="bg-primary-red rounded-main text-white p-2">Entrar</button>
+  <form class="d-flex flex-column gap-3 mt-3" [formGroup]="loginForm" (ngSubmit)="onConfirmLogin()">
+    @if (register) {
+      <input type="text" formControlName="name" class="border-disabled color-muted py-2 px-3 rounded-main" placeholder="Nome completo" />
+    }
+
+    <input type="text" formControlName="email" class="border-disabled color-muted py-2 px-3 rounded-main" placeholder="E-mail" />
+
+    <input type="password" formControlName="password" class="border-disabled color-muted py-2 px-3 rounded-main" placeholder="Senha"/>
+
+    <button type="submit" class="bg-primary-red rounded-main text-white p-2">{{ register ? 'Cadastrar' : 'Entrar' }}</button>
     <div class="d-flex justify-content-center">
-      <span class="primary"> <strong>Não tem conta? cadastre-se</strong> </span>
+      <span class="primary" (click)="registerToggle()"> <strong>{{ register ? 'Já tem conta? Faça login' : 'Não tem conta? Cadastre-se' }}</strong> </span>
     </div>
-  </section>
+  </form>
 
   <section class="security mt-3">
     <div class="d-flex align-items-center gateway-container gap-2 bg-secondary-bege py-3 px-3">
