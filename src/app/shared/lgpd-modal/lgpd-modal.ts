@@ -10,13 +10,13 @@ import { AsyncPipe } from '@angular/common';
   styleUrls: ['./lgpd-modal.css'],
 })
 export class LgpdModalComponent implements OnInit {
-  hasAccepted$!: Observable<Boolean | null>;
+  hasAccepted$!: Observable<boolean | null>;
 
   constructor(private validateLgpdService: ValidateLgpdService) {}
 
   ngOnInit(): void {
     this.hasAccepted$ = this.validateLgpdService.lgpdConsent$;
-    this.validateLgpdService.getLgpd();
+    console.log(this.hasAccepted$);
   }
 
   accept(): void {
