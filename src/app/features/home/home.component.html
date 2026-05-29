@@ -1,9 +1,9 @@
 <main>
   <div class="main d-flex flex-column gap-3">
     @if (lastOrderItem$ | async; as order) {
-    <div class="bg-success-green p-3 d-flex align-items-center gap-3">
+    <div class="bg-success-green p-3 d-flex align-items-center gap-2">
       <i class="fa-solid fa-circle"></i>
-      <button (click)="openOrder()">
+      <button (click)="openOrder()" class="d-flex flex-column align-items-start">
         <p class="m-0 text-white">
           Pedido {{ order.orderCode }} - {{ order.deliveryStatus }}
         </p>
@@ -16,6 +16,8 @@
     <app-carousel></app-carousel>
 
     <app-restaurant-selector></app-restaurant-selector>
+
+    <app-promotion-select></app-promotion-select>
 
     <app-food-menu></app-food-menu>
     <app-dish-card></app-dish-card>

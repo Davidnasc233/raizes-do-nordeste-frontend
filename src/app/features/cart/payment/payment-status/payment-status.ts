@@ -4,7 +4,7 @@ import { ICartItem } from '../../../../models/cart-item.model';
 import { Router } from '@angular/router';
 import { map, Observable, take } from 'rxjs';
 import { RestaurantAddressService } from '../../../../services/restaurant-address.service';
-import { RestaurantUnit } from '../../../../models/restaurant-models';
+import { IRestaurantUnit } from '../../../../models/restaurant-models';
 import { OrderStatusStep } from './interface/order-status-step.interface';
 import { CartService } from '../../../../services/cart.service';
 import { IOrder } from '../../../../models/order.model';
@@ -20,33 +20,40 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
   subtotal = 0;
   total = 0;
   readonly deliveryFee = 7.9;
-  selectedUnit$!: Observable<RestaurantUnit | null>;
+  selectedUnit$!: Observable<IRestaurantUnit | null>;
   orderStatus: string = '';
   private intervalId: any;
   currentStepIndex = 0;
   cartOrder$!: Observable<IOrder | undefined>;
 
   statusSteps: OrderStatusStep[] = [
-    { id: 1, label: 'Recebido', iconClass: 'fa-check', subtitle: 'Atualizando em tempo real...', isCompleted: true, isActive: true },
+    {
+      id: 1,
+      label: 'Recebido',
+      iconClass: 'fa-check',
+      subtitle: 'Atualizando em tempo real...',
+      isCompleted: true,
+      isActive: true,
+    },
     { id: 2, label: 'Em preparo', iconClass: 'fa-utensils', isCompleted: false, isActive: false },
     { id: 3, label: 'Pronto', iconClass: 'fa-box-open', isCompleted: false, isActive: false },
-    { id: 4, label: 'Entregue', iconClass: 'fa-truck', isCompleted: false, isActive: false }
+    { id: 4, label: 'Entregue', iconClass: 'fa-truck', isCompleted: false, isActive: false },
   ];
 
   constructor(
     private router: Router,
     private cartService: CartService,
     private restaurantAddressService: RestaurantAddressService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {
     const navigation = this.router.getCurrentNavigation();
 
     if (navigation?.extras.state && navigation.extras.state['cartData']) {
       this.items = navigation.extras.state['cartData'];
-      this.orderStatus = navigation.extras.state['paymentStatus']
+      this.orderStatus = navigation.extras.state['paymentStatus'];
     }
     this.cartOrder$ = this.cartService.orders$.pipe(
-      map(orders => orders.length > 0 ? orders[orders.length - 1] : undefined)
+      map((orders) => (orders.length > 0 ? orders[orders.length - 1] : undefined)),
     );
     this.selectedUnit$ = this.restaurantAddressService.selectedUnit$;
   }
@@ -54,12 +61,12 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subtotal = this.calculateItemsTotal(this.items);
     this.total = this.subtotal + this.deliveryFee;
-    this.cartService.orders$.pipe(take(1)).subscribe(orders => {
+    this.cartService.orders$.pipe(take(1)).subscribe((orders) => {
       if (orders && orders.length > 0) {
         const currentStatus = orders[0].deliveryStatus;
-        
-        const savedIndex = this.statusSteps.findIndex(step => step.label === currentStatus);
-        
+
+        const savedIndex = this.statusSteps.findIndex((step) => step.label === currentStatus);
+
         if (savedIndex >= this.statusSteps.length - 1) {
           this.updateSteps(savedIndex);
         } else {
@@ -80,12 +87,12 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
 
   startOrderSimulation() {
     const lastOrder = this.cartService.lastOrderValue;
-    
+
     if (lastOrder && lastOrder.deliveryStatus) {
       const savedIndex = this.statusSteps.findIndex(
-        (step) => step.label.toLowerCase() === lastOrder.deliveryStatus.toLowerCase()
+        (step) => step.label.toLowerCase() === lastOrder.deliveryStatus.toLowerCase(),
       );
-  
+
       if (savedIndex !== -1) {
         if (savedIndex >= this.statusSteps.length - 1) {
           this.currentStepIndex = savedIndex;
@@ -95,7 +102,7 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
           return;
         }
-        
+
         this.currentStepIndex = savedIndex;
       } else {
         this.currentStepIndex = 0;
@@ -103,19 +110,19 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
     } else {
       this.currentStepIndex = 0;
     }
-  
+
     this.updateSteps(this.currentStepIndex);
-  
+
     this.intervalId = setInterval(() => {
       this.currentStepIndex++;
-  
+
       if (this.currentStepIndex < this.statusSteps.length) {
         this.updateSteps(this.currentStepIndex);
       } else {
         this.statusSteps[this.currentStepIndex - 1].isCompleted = true;
         this.statusSteps[this.currentStepIndex - 1].isActive = false;
         this.cartService.updateLastOrderStatus(this.statusSteps[this.statusSteps.length - 1].label);
-        
+
         clearInterval(this.intervalId);
         this.cdr.detectChanges();
       }
@@ -148,6 +155,6 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
   }
 
   private calculateItemsTotal(items: ICartItem[]): number {
-    return items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 }

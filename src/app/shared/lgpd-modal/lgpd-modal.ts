@@ -16,7 +16,6 @@ export class LgpdModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.hasAccepted$ = this.validateLgpdService.lgpdConsent$;
-    console.log(this.hasAccepted$);
   }
 
   accept(): void {

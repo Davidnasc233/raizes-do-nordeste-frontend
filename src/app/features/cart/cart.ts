@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { ICartItem } from '../../models/cart-item.model';
 import { CartService } from '../../services/cart.service';
 import { AsyncPipe } from '@angular/common';
-import { RestaurantUnit } from '../../models/restaurant-models';
+import { IRestaurantUnit } from '../../models/restaurant-models';
 import { RestaurantAddressService } from '../../services/restaurant-address.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { RestaurantAddressService } from '../../services/restaurant-address.serv
 })
 export class Cart implements OnInit {
   cartItems$!: Observable<ICartItem[]>;
-  selectedUnit$!: Observable<RestaurantUnit | null>;
+  selectedUnit$!: Observable<IRestaurantUnit | null>;
 
   constructor(
     public cartService: CartService,

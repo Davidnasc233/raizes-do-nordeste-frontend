@@ -1,7 +1,7 @@
 import { MenuCategory } from '../shared/enum/category.enum';
-import { MenuItem, RestaurantsResponse } from './restaurant-models';
+import { IMenuItem, IRestaurantsResponse } from './restaurant-models';
 
-export const BAHIA_COMMON_ITEMS: MenuItem[] = [
+export const BAHIA_COMMON_ITEMS: IMenuItem[] = [
   {
     id: 1,
     name: 'Moqueca de Camarão',
@@ -46,136 +46,151 @@ export const BAHIA_COMMON_ITEMS: MenuItem[] = [
   },
 ];
 
-export const SERGIPE_COMMON_ITEMS: MenuItem[] = [
-    {
-      id: 1,
-      name: 'Aratu na Palha',
-      image: 'images/aratu-na-palha.webp',
-      description: 'Delicioso aratu catado, temperado com ervas e leite de coco, assado na folha de bananeira. Uma explosão de sabor e perfume.',
-      category: MenuCategory.DISHES,
-      price: 68
-    },
-    {
-      id: 2,
-      name: 'Camarão de Cueca',
-      image: 'images/camarao-de-cueca.jpg',
-      description: 'Camarões empanados na tapioca e coco ralado, servidos com um inusitado "anel" de queijo coalho grelhado na calda de mel de engenho.',
-      category: MenuCategory.DISHES,
-      price: 74
-    },
-    {
-      id: 3,
-      name: 'Sarapatel',
-      image: 'images/sarapatel.jpg',
-      description: 'Prato tradicional de miúdos de porco e sangue coagulado, cozido lentamente com especiarias e hortelã. Acompanha farinha de mandioca e arroz branco.',
-      category: MenuCategory.DISHES,
-      price: 55
-    },
-    {
-      id: 4,
-      name: 'Pé de Moleque',
-      image: 'images/pe-de-moleque.jpg',
-      description: 'Doce tradicional nordestino feito de massa de puba (mandioca fermentada), coco ralado, rapadura, cravo e canela. Textura firme e aroma inconfundível.',
-      category: MenuCategory.DESSERTS,
-      price: 18
-    },
-    {
-      id: 5,
-      name: 'Meladinha',
-      image: 'images/meladinha.jpg',
-      description: 'Uma dose da nossa cachaça artesanal envelhecida, suavemente adocicada com melado de cana e um toque de limão.',
-      category: MenuCategory.DRINKS,
-      price: 12
-    }
-  ];
-
-  export const PERNAMBUCO_COMMON_ITEMS: MenuItem[] = [
-    {
-        id: 1,
-        name: 'Carne de Sol com Macaxeira',
-        image: 'images/carne-de-sol.jpg',
-        description: 'Carne de sol artesanal acebolada, grelhada na manteiga de garrafa, acompanhada de macaxeira bem macia (frita ou cozida).',
-        category: MenuCategory.DISHES,
-        price: 52
-    },
-    {
-        id: 2,
-        name: 'Buchada de Bode',
-        image: 'images/buchada.webp',
-        description: 'Tradicional iguaria nordestina feita com miúdos de bode cozidos e temperados no capricho, servida bem quente com pirão e arroz.',
-        category: MenuCategory.DISHES,
-        price: 58
-    },
-    {
-        id: 3,
-        name: 'Baião de Dois',
-        image: 'images/baiao-de-dois.webp',
-        description: 'Mistura clássica e cremosa de arroz, feijão de corda, queijo coalho grelhado, bacon, carne seca desfiada e cheiro-verde.',
-        category: MenuCategory.DISHES,
-        price: 45
-    },
-    {
-        id: 4,
-        name: 'Bolo de Noiva Pernambucano',
-        image: 'images/bolo-de-noiva.jpg',
-        description: 'O tradicional bolo de festa pernambucano, feito à base de ameixa, passas, frutas cristalizadas e um toque marcante de vinho.',
-        category: MenuCategory.DESSERTS,
-        price: 22
-    },
-    {
-        id: 5,
-        name: 'Pitú',
-        image: 'images/pitu.avif',
-        description: 'Dose da clássica e tradicional cachaça pernambucana da latinha branca, perfeita para acompanhar os pratos pesados.',
-        category: MenuCategory.DRINKS,
-        price: 10
-    }
+export const SERGIPE_COMMON_ITEMS: IMenuItem[] = [
+  {
+    id: 1,
+    name: 'Aratu na Palha',
+    image: 'images/aratu-na-palha.webp',
+    description:
+      'Delicioso aratu catado, temperado com ervas e leite de coco, assado na folha de bananeira. Uma explosão de sabor e perfume.',
+    category: MenuCategory.DISHES,
+    price: 68,
+  },
+  {
+    id: 2,
+    name: 'Camarão de Cueca',
+    image: 'images/camarao-de-cueca.jpg',
+    description:
+      'Camarões empanados na tapioca e coco ralado, servidos com um inusitado "anel" de queijo coalho grelhado na calda de mel de engenho.',
+    category: MenuCategory.DISHES,
+    price: 74,
+  },
+  {
+    id: 3,
+    name: 'Sarapatel',
+    image: 'images/sarapatel.jpg',
+    description:
+      'Prato tradicional de miúdos de porco e sangue coagulado, cozido lentamente com especiarias e hortelã. Acompanha farinha de mandioca e arroz branco.',
+    category: MenuCategory.DISHES,
+    price: 55,
+  },
+  {
+    id: 4,
+    name: 'Pé de Moleque',
+    image: 'images/pe-de-moleque.jpg',
+    description:
+      'Doce tradicional nordestino feito de massa de puba (mandioca fermentada), coco ralado, rapadura, cravo e canela. Textura firme e aroma inconfundível.',
+    category: MenuCategory.DESSERTS,
+    price: 18,
+  },
+  {
+    id: 5,
+    name: 'Meladinha',
+    image: 'images/meladinha.jpg',
+    description:
+      'Uma dose da nossa cachaça artesanal envelhecida, suavemente adocicada com melado de cana e um toque de limão.',
+    category: MenuCategory.DRINKS,
+    price: 12,
+  },
 ];
 
-export const ALAGOAS_COMMON_ITEMS: MenuItem[] = [
-    {
-        id: 12,
-        name: 'Sururu ao Coco',
-        image: 'images/sururu-ao-coco.jpg',
-        description: 'O clássico molusco das lagoas alagoanas, cozido com leite de coco fresco, verduras picadinhas, coentro e um toque de azeite de dendê.',
-        category: MenuCategory.DISHES,
-        price: 48
-    },
-    {
-        id: 13,
-        name: 'Peixada Alagoana',
-        image: 'images/peixada-alagoana.jpg',
-        description: 'Postas de peixe fresco cozidas em um delicioso caldo temperado com leite de coco e legumes. Acompanha pirão cremoso e arroz branco.',
-        category: MenuCategory.DISHES,
-        price: 65
-    },
-    {
-        id: 14,
-        name: 'Passaporte',
-        image: 'images/passaporte.jfif',
-        description: 'O clássico cachorro-quente de Maceió! Pão seda recheado com carne moída bem temperada, salsicha, tomate picado, milho, ervilha, maionese artesanal e queijo ralado.',
-        category: MenuCategory.DISHES,
-        price: 18
-    },
-    {
-        id: 15,
-        name: 'Cocada da Massagueira',
-        image: 'images/cocada-massagueira.jpg',
-        description: 'Inspirada nas famosas cocadas do maior polo gastronômico de Alagoas. Uma cocada artesanal super cremosa, servida morna e feita com coco puro.',
-        category: MenuCategory.DESSERTS,
-        price: 14
-    },
-    {
-        id: 16,
-        name: 'Aluá',
-        image: 'images/alua.webp',
-        description: 'Bebida fermentada tradicional de origem indígena, preparada de forma artesanal com casca de abacaxi, gengibre, cravo e adoçada com rapadura.',
-        category: MenuCategory.DRINKS,
-        price: 9
-    }
+export const PERNAMBUCO_COMMON_ITEMS: IMenuItem[] = [
+  {
+    id: 1,
+    name: 'Carne de Sol com Macaxeira',
+    image: 'images/carne-de-sol.jpg',
+    description:
+      'Carne de sol artesanal acebolada, grelhada na manteiga de garrafa, acompanhada de macaxeira bem macia (frita ou cozida).',
+    category: MenuCategory.DISHES,
+    price: 52,
+  },
+  {
+    id: 2,
+    name: 'Buchada de Bode',
+    image: 'images/buchada.webp',
+    description:
+      'Tradicional iguaria nordestina feita com miúdos de bode cozidos e temperados no capricho, servida bem quente com pirão e arroz.',
+    category: MenuCategory.DISHES,
+    price: 58,
+  },
+  {
+    id: 3,
+    name: 'Baião de Dois',
+    image: 'images/baiao-de-dois.webp',
+    description:
+      'Mistura clássica e cremosa de arroz, feijão de corda, queijo coalho grelhado, bacon, carne seca desfiada e cheiro-verde.',
+    category: MenuCategory.DISHES,
+    price: 45,
+  },
+  {
+    id: 4,
+    name: 'Bolo de Noiva Pernambucano',
+    image: 'images/bolo-de-noiva.jpg',
+    description:
+      'O tradicional bolo de festa pernambucano, feito à base de ameixa, passas, frutas cristalizadas e um toque marcante de vinho.',
+    category: MenuCategory.DESSERTS,
+    price: 22,
+  },
+  {
+    id: 5,
+    name: 'Pitú',
+    image: 'images/pitu.avif',
+    description:
+      'Dose da clássica e tradicional cachaça pernambucana da latinha branca, perfeita para acompanhar os pratos pesados.',
+    category: MenuCategory.DRINKS,
+    price: 10,
+  },
 ];
 
-export const MOCK_RESTAURANTS: RestaurantsResponse = {
+export const ALAGOAS_COMMON_ITEMS: IMenuItem[] = [
+  {
+    id: 12,
+    name: 'Sururu ao Coco',
+    image: 'images/sururu-ao-coco.jpg',
+    description:
+      'O clássico molusco das lagoas alagoanas, cozido com leite de coco fresco, verduras picadinhas, coentro e um toque de azeite de dendê.',
+    category: MenuCategory.DISHES,
+    price: 48,
+  },
+  {
+    id: 13,
+    name: 'Peixada Alagoana',
+    image: 'images/peixada-alagoana.jpg',
+    description:
+      'Postas de peixe fresco cozidas em um delicioso caldo temperado com leite de coco e legumes. Acompanha pirão cremoso e arroz branco.',
+    category: MenuCategory.DISHES,
+    price: 65,
+  },
+  {
+    id: 14,
+    name: 'Passaporte',
+    image: 'images/passaporte.jfif',
+    description:
+      'O clássico cachorro-quente de Maceió! Pão seda recheado com carne moída bem temperada, salsicha, tomate picado, milho, ervilha, maionese artesanal e queijo ralado.',
+    category: MenuCategory.DISHES,
+    price: 18,
+  },
+  {
+    id: 15,
+    name: 'Cocada da Massagueira',
+    image: 'images/cocada-massagueira.jpg',
+    description:
+      'Inspirada nas famosas cocadas do maior polo gastronômico de Alagoas. Uma cocada artesanal super cremosa, servida morna e feita com coco puro.',
+    category: MenuCategory.DESSERTS,
+    price: 14,
+  },
+  {
+    id: 16,
+    name: 'Aluá',
+    image: 'images/alua.webp',
+    description:
+      'Bebida fermentada tradicional de origem indígena, preparada de forma artesanal com casca de abacaxi, gengibre, cravo e adoçada com rapadura.',
+    category: MenuCategory.DRINKS,
+    price: 9,
+  },
+];
+
+export const MOCK_RESTAURANTS: IRestaurantsResponse = {
   unit: [
     {
       id: 1,

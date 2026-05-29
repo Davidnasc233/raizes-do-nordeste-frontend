@@ -41,7 +41,7 @@ export class UserProfile {
         return 'Cancelado';
       }
       return '';
-    }
+    };
   }
 
   revokeLgpdConsent(): void {

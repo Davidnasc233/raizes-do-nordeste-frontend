@@ -1,42 +1,39 @@
 <nav class="nav-container my-0">
   <div class="d-flex align-items-center justify-content-between items">
-    @if (!(currentRoute$ | async)?.includes('cart')) {
-    <div class="d-flex align-items-center gap-2">
-      <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToHome()"/>
-      <div class="d-flex flex-column">
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="loyalty">
-        <i class="fa-solid fa-crown"></i>
-      </button>
-
-      <button class="notification">
-        <i class="fa-solid fa-bell"></i>
-      </button>
-    </div>
-    } @else {
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-2">
-        <button class="bg-secondary-bege background" (click)="redirectTo()">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-
-        <div>
-          @if ((currentRoute$ | async)?.includes('payment-status')) {
-            <p class="m-0 fs-5">
-              <strong>Pedido {{ orderCode }}</strong>
-            </p>
-          } 
-          @else {
-            <p class="m-0 fs-5">
-              <strong>Carrinho</strong>
-            </p>
-          }
+    @if (navBarState$ | async; as navBarState) {
+      @if (!navBarState.compact) {
+        <div class="d-flex align-items-center gap-2">
+          <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToHome()" />
+          <div class="d-flex flex-column"></div>
         </div>
-      </div>
-    </div>
+
+        <div class="buttons">
+          <button class="loyalty">
+            <i class="fa-solid fa-crown"></i>
+          </button>
+
+          <button class="notification" (click)="redirectToPromotionPage()">
+            <i class="fa-solid fa-bell"></i>
+          </button>
+        </div>
+      } @else {
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <button class="bg-secondary-bege background" (click)="redirectTo()">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <div class="d-flex align-items-center gap-2">
+              @if (navBarState.icon) {
+                <i [class]="navBarState.icon" class="primary"></i>
+              }
+              <p class="m-0 fs-5">
+                <strong>{{ navBarTitle$ | async }}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      }
     }
   </div>
 </nav>
