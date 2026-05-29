@@ -26,16 +26,15 @@ export class HomeComponent {
 
   ngOnInit() {
     this.lastOrderItem$ = this.cartService.orders$.pipe(
-      map((orders) => (orders.length > 0 ? orders[0] : undefined)),
+      map((orders) => orders.find((order) => order.status !== 'refused')),
     );
-    
   }
 
   openOrder() {
-    const actualOrders = (this.cartService as any).ordersSubject.getValue();
+    const actualOrders = this.cartService.getLatestOrderByStatus('accepted');
 
-    if (actualOrders && actualOrders.length > 0) {
-      const lastOrder = actualOrders[0];
+    if (actualOrders) {
+      const lastOrder = actualOrders;
       this.router.navigate(['/cart/payment-status'], { state: { lastOrder: lastOrder } });
     }
   }

@@ -8,19 +8,8 @@ import { IOrder, OrderStatus } from '../models/order.model';
 })
 export class CartService {
   private readonly ORDERS_STORAGE_KEY = 'orders';
-  private mockCart: ICartItem[] = [];
+  private cartItemsSubject = new BehaviorSubject<ICartItem[]>([]);
   private ordersSubject = new BehaviorSubject<IOrder[]>(this.loadOrders());
-
-  private cartItemsSubject: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(
-    this.mockCart,
-  );
-  private latestOrderCodeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-
-  get latestOrderCode$(): Observable<string> {
-    return this.latestOrderCodeSubject.asObservable();
-  }
-
-  constructor() {}
 
   get items$(): Observable<ICartItem[]> {
     return this.cartItemsSubject.asObservable();
@@ -40,56 +29,32 @@ export class CartService {
     return this.ordersSubject.asObservable();
   }
 
+  constructor() {}
+
   addToCart(product: Omit<ICartItem, 'quantity'>): void {
     const currentItems = this.cartItemsSubject.value;
     const existingItem = currentItems.find((item) => item.id === product.id);
-
     if (existingItem) {
-      this.increaseQuantity(product.id);
+      this.updateQuantity(product.id, existingItem.quantity + 1);
     } else {
-      const updatedCart = [...currentItems, { ...product, quantity: 1 }];
-      this.updateCart(updatedCart);
+      this.cartItemsSubject.next([...currentItems, { ...product, quantity: 1 }]);
     }
   }
 
+  updateQuantity(id: number, quantity: number): void {
+    let updatedCart = this.cartItemsSubject.value.map((item) =>
+      item.id === id ? { ...item, quantity } : item,
+    );
+    updatedCart = updatedCart.filter((item) => item.quantity > 0);
+    this.cartItemsSubject.next(updatedCart);
+  }
+
   removeFromCart(id: number): void {
-    const currentItems = this.cartItemsSubject.value;
-    const updatedCart = currentItems.filter((item) => item.id !== id);
-    this.updateCart(updatedCart);
-  }
-
-  increaseQuantity(id: number): void {
-    const currentItems = this.cartItemsSubject.value;
-    const updatedCart = currentItems.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: item.quantity + 1 };
-      }
-      return item;
-    });
-    this.updateCart(updatedCart);
-  }
-
-  decreaseQuantity(id: number): void {
-    const currentItems = this.cartItemsSubject.value;
-    const updatedCart = currentItems
-      .map((item) => {
-        if (item.id === id) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      })
-      .filter((item) => item.quantity > 0);
-
-    this.updateCart(updatedCart);
-  }
-
-  private updateCart(newCart: ICartItem[]): void {
-    this.mockCart = newCart;
-    this.cartItemsSubject.next(newCart);
+    this.updateQuantity(id, 0);
   }
 
   clearCart(): void {
-    this.updateCart([]);
+    this.cartItemsSubject.next([]);
   }
 
   createOrder(status: OrderStatus, items: ICartItem[] = this.cartItemsSubject.value): IOrder {
@@ -98,15 +63,12 @@ export class CartService {
       orderCode: this.generateOrderCode(),
       status,
       deliveryStatus: 'Recebido',
-      items: this.cloneItems(items),
+      items: items.map((item) => ({ ...item })),
       createdAt: new Date().toISOString(),
     };
-
     const updatedOrders = [order, ...this.ordersSubject.value];
     this.ordersSubject.next(updatedOrders);
-    this.latestOrderCodeSubject.next(order.orderCode);
     this.saveOrders(updatedOrders);
-
     return order;
   }
 
@@ -131,10 +93,6 @@ export class CartService {
 
   private saveOrders(orders: IOrder[]): void {
     localStorage.setItem(this.ORDERS_STORAGE_KEY, JSON.stringify(orders));
-  }
-
-  private cloneItems(items: ICartItem[]): ICartItem[] {
-    return items.map((item) => ({ ...item }));
   }
 
   private generateOrderId(): string {
@@ -177,13 +135,10 @@ export class CartService {
   }
 
   get lastOrder$(): Observable<IOrder | undefined> {
-    return this.orders$.pipe(
-      map(orders => orders.length > 0 ? orders[0] : undefined)
-    );
+    return this.orders$.pipe(map((orders) => orders[0]));
   }
 
   get lastOrderValue(): IOrder | undefined {
-    const orders = this.ordersSubject.getValue();
-    return orders.length > 0 ? orders[0] : undefined;
+    return this.ordersSubject.value[0];
   }
 }

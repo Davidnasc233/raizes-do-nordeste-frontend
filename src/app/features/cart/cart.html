@@ -10,8 +10,8 @@
     @if (items.length === 0) {
     <app-no-item-cart></app-no-item-cart>
     } @else {
-    <app-cart-items [data]="items" (increase)="cartService.increaseQuantity($event)"
-        (decrease)="cartService.decreaseQuantity($event)" (clear)="cartService.clearCart()">
+    <app-cart-items [data]="items" (increase)="onIncrease($event, items)"
+        (decrease)="onDecrease($event, items)" (clear)="onClear()">
     </app-cart-items>
     <app-payment [data]="items"></app-payment>
     }
