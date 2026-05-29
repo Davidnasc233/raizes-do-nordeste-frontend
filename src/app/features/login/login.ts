@@ -95,7 +95,7 @@ export class Login {
         email: formControl.email.value,
         password: formControl.password.value,
         isLogged: true,
-        points: 0,
+        points: 100,
         ordersCount: 0,
         updatedAt: new Date().toISOString(),
       });

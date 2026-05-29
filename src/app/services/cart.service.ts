@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ICartItem } from '../models/cart-item.model';
 import { IOrder, OrderStatus } from '../models/order.model';
+import { UserStorageService } from './user-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class CartService {
     return this.ordersSubject.asObservable();
   }
 
-  constructor() {}
+  constructor(private readonly userStorageService: UserStorageService) {}
 
   addToCart(product: Omit<ICartItem, 'quantity'>): void {
     const currentItems = this.cartItemsSubject.value;
@@ -69,7 +70,22 @@ export class CartService {
     const updatedOrders = [order, ...this.ordersSubject.value];
     this.ordersSubject.next(updatedOrders);
     this.saveOrders(updatedOrders);
+    this.incrementUserOrdersCount();
     return order;
+  }
+
+  private incrementUserOrdersCount(): void {
+    const currentUser = this.userStorageService.getCurrentUser();
+
+    if (!currentUser) {
+      return;
+    }
+
+    this.userStorageService.saveUser({
+      ...currentUser,
+      ordersCount: currentUser.ordersCount + 1,
+      updatedAt: new Date().toISOString(),
+    });
   }
 
   getLatestOrderByStatus(status: OrderStatus): IOrder | null {
