@@ -9,6 +9,7 @@ import { UserStorageService } from './user-storage.service';
 })
 export class CartService {
   private readonly ORDERS_STORAGE_KEY = 'orders';
+  private readonly DELIVERY_FEE = 7.9;
   private cartItemsSubject = new BehaviorSubject<ICartItem[]>([]);
   private ordersSubject = new BehaviorSubject<IOrder[]>(this.loadOrders());
 
@@ -83,6 +84,7 @@ export class CartService {
 
     this.userStorageService.saveUser({
       ...currentUser,
+      points: currentUser.points + 100,
       ordersCount: currentUser.ordersCount + 1,
       updatedAt: new Date().toISOString(),
     });
@@ -148,6 +150,25 @@ export class CartService {
       this.ordersSubject.next(updatedOrders);
       this.saveOrders(updatedOrders);
     }
+  }
+
+  calculateOrdersTotalValue(order: IOrder): Observable<number> {
+    return this.orders$.pipe(
+      map((orders) => {
+        const currentOrder = orders.find((current) => current.id === order.id);
+
+        if (!currentOrder) {
+          return 0;
+        }
+
+        const itemsTotal = currentOrder.items.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0,
+        );
+
+        return itemsTotal + this.DELIVERY_FEE;
+      }),
+    );
   }
 
   get lastOrder$(): Observable<IOrder | undefined> {

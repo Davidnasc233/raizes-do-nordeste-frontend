@@ -10,3 +10,25 @@
 .fa-solid {
     font-size: 1rem;
 }
+
+.history {
+    overflow-y: auto;
+    min-height: 50px;
+    max-height: 300px;
+}
+
+.history-status {
+    line-height: normal;
+
+    span {
+        font-size: 0.9rem;
+    }
+
+    .order-code {
+        font-weight: 600;
+    }
+
+    small {
+        color: #555;
+    }
+}
