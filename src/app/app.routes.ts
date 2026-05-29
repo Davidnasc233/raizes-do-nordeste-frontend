@@ -3,7 +3,7 @@ import { HomeComponent } from './features/home/home.component';
 import { Cart } from './features/cart/cart';
 import { UserProfile } from './features/user-profile/user-profile';
 import { PaymentStatusComponent } from './features/cart/payment/payment-status/payment-status';
-import { Login } from './features/login/login/login';
+import { Login } from './features/login/login';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [

@@ -1,64 +1,88 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastService } from '../../../services/toast.service';
-import { UserStorageService } from '../../../services/user-storage.service';
+import { ToastService } from '../../services/toast.service';
+import { UserStorageService } from '../../services/user-storage.service';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass, CommonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
   register: boolean = false;
   loginForm = new FormGroup({
-    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
     name: new FormControl('', { nonNullable: true }),
-    password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+    password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
   constructor(
     private readonly router: Router,
     private readonly userStorage: UserStorageService,
-    private readonly toast: ToastService
+    private readonly toast: ToastService,
   ) {}
 
   registerToggle() {
     this.register = !this.register;
+
+    const nameControl = this.loginForm.controls.name;
+    if (this.register) {
+      nameControl.addValidators(Validators.required);
+    } else {
+      nameControl.clearValidators();
+      nameControl.setValue('');
+      nameControl.markAsPristine();
+      nameControl.markAsUntouched();
+    }
+    nameControl.updateValueAndValidity();
   }
 
   onConfirmLogin() {
     const formControl = this.loginForm.controls;
 
     if (this.register === true) {
+      this.loginForm.markAllAsTouched();
+      if (this.loginForm.invalid) {
+        return;
+      }
       this.onRegister(formControl);
     } else {
       this.onLogin();
     }
   }
 
-  onForgotPassword() {
-  }
+  onForgotPassword() {}
 
   onLogin() {
     const user = this.userStorage.getCurrentUser();
 
-    if (!user) {
-      return this.toast.show('Nenhum usuário encontrado. Por favor, registre-se primeiro.', 'danger');
+    if (this.loginForm.valid && !user) {
+      return this.toast.show('Usuário não encontrado.', 'danger');
     }
 
-    if (user.email === this.loginForm.controls.email.value && user.password === this.loginForm.controls.password.value) {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return this.toast.show('Por favor, preencha todos os campos corretamente.', 'danger');
+    }
+
+    if (
+      user?.email === this.loginForm.controls.email.value &&
+      user?.password === this.loginForm.controls.password.value
+    ) {
       this.router.navigate(['/home']);
     } else {
       this.toast.show('Email ou senha incorretos. Tente novamente.', 'danger');
     }
-
   }
 
   onRegister(formControl: typeof this.loginForm.controls) {
-    
     if (formControl.name?.value === '') {
       return this.toast.show('O campo nome é obrigatório para cadastro', 'danger');
     }
@@ -70,9 +94,8 @@ export class Login {
       password: formControl.password.value,
       points: 0,
       ordersCount: 0,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     });
-
   }
 
   validateFormControl(control: FormControl) {
@@ -83,5 +106,4 @@ export class Login {
     }
     return null;
   }
-
 }
