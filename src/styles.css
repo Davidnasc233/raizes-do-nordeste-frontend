@@ -48,17 +48,19 @@ i {
 .bg-darker-red { background-color: var(--darker-primary); }
 .bg-light-red { background-color: rgb(from var(--light-primary) r g b / 10%); }
 .bg-secondary-bege { background-color: var(--secondary); }
-.bg-disabled-color { background-color: var(--disabled); };
+.bg-disabled-color { background-color: var(--disabled); }
 .bg-background { background-color: var(--background); }
 .bg-success-green { background-color: var(--success); }
 .bg-foreground { background-color: var(--foreground); }
 .bg-accent { background-color: var(--accent); }
 
 /* Bordas e Raio */
-.border-primary { border: 1px solid var(--color-primary); }
+.border-primary-red { border: 1px solid var(--color-primary); }
+.border-disabled { border: 1px solid var(--disabled); }
 .rounded-main { border-radius: 0.875rem; }
 
 button {
   background: none;
   border: none;
 }
+

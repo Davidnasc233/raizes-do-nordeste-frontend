@@ -1,22 +1,22 @@
-@if (!hasAccepted) {
-<div class="lgpd-container">
+@if ((hasAccepted$ | async) === null) {
+  <div class="lgpd-container">
     <div class="lgpd-content">
-        <div class="d-flex align-items-center gap-2">
-            <div class="icon-section">
-                <i class="fa-solid fa-user-shield"></i>
-            </div>
-
-            <p class="lgpd-text">
-                Usamos cookies e dados pessoais conforme a <strong>LGPD</strong> para personalizar seu cardápio e
-                fidelidade.
-                Dados sensíveis são anonimizados. Você pode revogar seu consentimento a qualquer momento.
-            </p>
+      <div class="d-flex align-items-center gap-2">
+        <div class="icon-section">
+          <i class="fa-solid fa-user-shield"></i>
         </div>
 
-        <div class="lgpd-actions">
-            <button class="btn-refuse" (click)="refuse()">Recusar</button>
-            <button class="btn-accept" (click)="accept()">Aceitar</button>
-        </div>
+        <p class="lgpd-text">
+          Usamos cookies e dados pessoais conforme a <strong>LGPD</strong> para personalizar seu
+          cardápio e fidelidade. Dados sensíveis são anonimizados. Você pode revogar seu
+          consentimento a qualquer momento.
+        </p>
+      </div>
+
+      <div class="lgpd-actions">
+        <button class="btn-refuse" (click)="refuse()">Recusar</button>
+        <button class="btn-accept" (click)="accept()">Aceitar</button>
+      </div>
     </div>
-</div>
-}
+  </div>
+} @else {}

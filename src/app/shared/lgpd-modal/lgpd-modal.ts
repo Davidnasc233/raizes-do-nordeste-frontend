@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { ValidateLgpdService } from '../../services/validate-lgpd-consent.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-lgpd-modal',
+  imports: [AsyncPipe],
   templateUrl: './lgpd-modal.html',
   styleUrls: ['./lgpd-modal.css'],
 })
 export class LgpdModalComponent implements OnInit {
-  hasAccepted: boolean = false;
-  private readonly COOKIE_KEY = 'user_lgpd_consent';
+  hasAccepted$!: Observable<boolean | null>;
+
+  constructor(private validateLgpdService: ValidateLgpdService) {}
 
   ngOnInit(): void {
-    const consent = localStorage.getItem(this.COOKIE_KEY);
-    if (consent) {
-      this.hasAccepted = true;
-    }
+    this.hasAccepted$ = this.validateLgpdService.lgpdConsent$;
+    console.log(this.hasAccepted$);
   }
 
   accept(): void {
-    localStorage.setItem(this.COOKIE_KEY, 'true');
-    this.hasAccepted = true;
+    this.validateLgpdService.setLgpd();
   }
 
   refuse(): void {
-    this.hasAccepted = true;
+    this.validateLgpdService.refuseLgpd();
   }
 }

@@ -1,0 +1,18 @@
+.gateway-container {
+  border-radius: 16px;
+}
+
+.gateway,
+span {
+  font-size: 0.82rem;
+}
+
+.invalid-form {
+  color: var(--light-primary);
+  font-weight: 600;
+  padding: 4px 0 0 0;
+}
+
+.invalid-input {
+  border-color: var(--light-primary);
+}

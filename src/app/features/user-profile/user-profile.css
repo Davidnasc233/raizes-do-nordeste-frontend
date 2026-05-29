@@ -1,0 +1,12 @@
+.bg-background, .bg-secondary-bege, .bg-foreground {
+    border-radius: 16px;
+}
+
+.bg-primary-red{
+    border-radius: 16px;
+    color: white;
+}
+
+.fa-solid {
+    font-size: 1rem;
+}

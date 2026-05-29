@@ -1,5 +1,18 @@
 <main>
   <div class="main d-flex flex-column gap-3">
+    @if (lastOrderItem$ | async; as order) {
+    <div class="bg-success-green p-3 d-flex align-items-center gap-3">
+      <i class="fa-solid fa-circle"></i>
+      <button (click)="openOrder()">
+        <p class="m-0 text-white">
+          Pedido {{ order.orderCode }} - {{ order.deliveryStatus }}
+        </p>
+        <span class="m-0 text-white">
+          Toque para acompanhar o pedido em tempo real.
+        </span>
+      </button>
+    </div>
+    }
     <app-carousel></app-carousel>
 
     <app-restaurant-selector></app-restaurant-selector>

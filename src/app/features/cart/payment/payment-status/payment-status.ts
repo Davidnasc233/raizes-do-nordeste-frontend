@@ -2,11 +2,12 @@ import { AsyncPipe, CommonModule, CurrencyPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ICartItem } from '../../../../models/cart-item.model';
 import { Router } from '@angular/router';
-import { CartService } from '../../../../services/cart.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { RestaurantAddressService } from '../../../../services/restaurant-address.service';
 import { RestaurantUnit } from '../../../../models/restaurant-models';
 import { OrderStatusStep } from './interface/order-status-step.interface';
+import { CartService } from '../../../../services/cart.service';
+import { IOrder } from '../../../../models/order.model';
 
 @Component({
   selector: 'app-payment-status',
@@ -16,11 +17,14 @@ import { OrderStatusStep } from './interface/order-status-step.interface';
 })
 export class PaymentStatusComponent implements OnInit, OnDestroy {
   items: ICartItem[] = [];
-  total$!: Observable<number>;
+  subtotal = 0;
+  total = 0;
+  readonly deliveryFee = 7.9;
   selectedUnit$!: Observable<RestaurantUnit | null>;
   orderStatus: string = '';
   private intervalId: any;
   currentStepIndex = 0;
+  cartOrder$!: Observable<IOrder | undefined>;
 
   statusSteps: OrderStatusStep[] = [
     { id: 1, label: 'Recebido', iconClass: 'fa-check', subtitle: 'Atualizando em tempo real...', isCompleted: true, isActive: true },
@@ -41,19 +45,31 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
       this.items = navigation.extras.state['cartData'];
       this.orderStatus = navigation.extras.state['paymentStatus']
     }
-
+    this.cartOrder$ = this.cartService.orders$.pipe(
+      map(orders => orders.length > 0 ? orders[orders.length - 1] : undefined)
+    );
     this.selectedUnit$ = this.restaurantAddressService.selectedUnit$;
   }
 
   ngOnInit() {
-    this.total$ = this.cartService.totalValue$.pipe(
-      map(totalValue => totalValue)
-    );
-    this.startOrderSimulation();
-  }
-
-  ngOnChanges() {
-
+    this.subtotal = this.calculateItemsTotal(this.items);
+    this.total = this.subtotal + this.deliveryFee;
+    this.cartService.orders$.pipe(take(1)).subscribe(orders => {
+      if (orders && orders.length > 0) {
+        const currentStatus = orders[0].deliveryStatus;
+        
+        const savedIndex = this.statusSteps.findIndex(step => step.label === currentStatus);
+        
+        if (savedIndex >= this.statusSteps.length - 1) {
+          this.updateSteps(savedIndex);
+        } else {
+          this.currentStepIndex = savedIndex !== -1 ? savedIndex : 0;
+          this.startOrderSimulation();
+        }
+      } else {
+        this.startOrderSimulation();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -63,22 +79,52 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
   }
 
   startOrderSimulation() {
+    const lastOrder = this.cartService.lastOrderValue;
+    
+    if (lastOrder && lastOrder.deliveryStatus) {
+      const savedIndex = this.statusSteps.findIndex(
+        (step) => step.label.toLowerCase() === lastOrder.deliveryStatus.toLowerCase()
+      );
+  
+      if (savedIndex !== -1) {
+        if (savedIndex >= this.statusSteps.length - 1) {
+          this.currentStepIndex = savedIndex;
+          this.updateSteps(this.currentStepIndex);
+          this.statusSteps[savedIndex].isCompleted = true;
+          this.statusSteps[savedIndex].isActive = false;
+          this.cdr.detectChanges();
+          return;
+        }
+        
+        this.currentStepIndex = savedIndex;
+      } else {
+        this.currentStepIndex = 0;
+      }
+    } else {
+      this.currentStepIndex = 0;
+    }
+  
     this.updateSteps(this.currentStepIndex);
-
+  
     this.intervalId = setInterval(() => {
       this.currentStepIndex++;
-
+  
       if (this.currentStepIndex < this.statusSteps.length) {
         this.updateSteps(this.currentStepIndex);
       } else {
         this.statusSteps[this.currentStepIndex - 1].isCompleted = true;
         this.statusSteps[this.currentStepIndex - 1].isActive = false;
+        this.cartService.updateLastOrderStatus(this.statusSteps[this.statusSteps.length - 1].label);
+        
         clearInterval(this.intervalId);
+        this.cdr.detectChanges();
       }
     }, 5000);
   }
 
   updateSteps(activeIndex: number) {
+    let currentLabel = '';
+
     this.statusSteps.forEach((step, index) => {
       if (index < activeIndex) {
         step.isCompleted = true;
@@ -87,11 +133,21 @@ export class PaymentStatusComponent implements OnInit, OnDestroy {
         step.isCompleted = false;
         step.subtitle = 'Atualizando em tempo real...';
         step.isActive = true;
+        currentLabel = step.label;
       } else {
         step.isCompleted = false;
         step.isActive = false;
       }
     });
+
+    if (currentLabel) {
+      this.cartService.updateLastOrderStatus(currentLabel);
+    }
+
     this.cdr.detectChanges();
+  }
+
+  private calculateItemsTotal(items: ICartItem[]): number {
+    return items.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 }

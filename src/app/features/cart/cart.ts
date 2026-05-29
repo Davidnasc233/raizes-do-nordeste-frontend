@@ -21,7 +21,7 @@ export class Cart implements OnInit {
 
   constructor(
     public cartService: CartService,
-    private restaurantAddressService: RestaurantAddressService
+    private restaurantAddressService: RestaurantAddressService,
   ) {}
 
   ngOnInit(): void {
@@ -29,5 +29,23 @@ export class Cart implements OnInit {
     this.selectedUnit$ = this.restaurantAddressService.selectedUnit$;
   }
 
-  
+  onIncrease(itemId: number, items: ICartItem[]): void {
+    const currentItem = items.find((item) => item.id === itemId);
+    if (!currentItem) {
+      return;
+    }
+    this.cartService.updateQuantity(itemId, currentItem.quantity + 1);
+  }
+
+  onDecrease(itemId: number, items: ICartItem[]): void {
+    const currentItem = items.find((item) => item.id === itemId);
+    if (!currentItem) {
+      return;
+    }
+    this.cartService.updateQuantity(itemId, currentItem.quantity - 1);
+  }
+
+  onClear(): void {
+    this.cartService.clearCart();
+  }
 }
