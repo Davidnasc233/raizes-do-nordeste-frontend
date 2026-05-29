@@ -31,25 +31,18 @@ export class UserProfile {
     this.validateLgpdService.refuseLgpd();
   }
 
+  logout() {
+    const user = this.userStorageService.getCurrentUser();
+    if (user) {
+      const loggedUser = { ...user, isLogged: false };
+      this.userStorageService.saveUser(loggedUser);
+    }
+    this.router.navigate(['/login']);
+  }
+
   deleteAllData() {
     this.userStorageService.clearUser();
     localStorage.removeItem('user_lgpd_consent');
     localStorage.removeItem('orders');
-  }
-
-  saveExampleUser(): void {
-    this.userStorageService.saveUser({
-      id: 'user-001',
-      name: 'Visitante Raizes',
-      email: 'visitante@raizes.com',
-      password: 'password123',
-      points: 120,
-      ordersCount: 3,
-      updatedAt: new Date().toISOString(),
-    });
-  }
-
-  clearSavedUser(): void {
-    this.userStorageService.clearUser();
   }
 }

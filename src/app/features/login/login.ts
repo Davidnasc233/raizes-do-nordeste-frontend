@@ -72,14 +72,16 @@ export class Login {
       return this.toast.show('Por favor, preencha todos os campos corretamente.', 'danger');
     }
 
-    if (
-      user?.email === this.loginForm.controls.email.value &&
-      user?.password === this.loginForm.controls.password.value
-    ) {
-      this.router.navigate(['/home']);
-    } else {
-      this.toast.show('Email ou senha incorretos. Tente novamente.', 'danger');
-    }
+      if (
+        user?.email === this.loginForm.controls.email.value &&
+        user?.password === this.loginForm.controls.password.value
+      ) {
+        const loggedUser = { ...user, isLogged: true };
+        this.userStorage.saveUser(loggedUser);
+        this.router.navigate(['/home']);
+      } else {
+        this.toast.show('Email ou senha incorretos. Tente novamente.', 'danger');
+      }
   }
 
   onRegister(formControl: typeof this.loginForm.controls) {
@@ -87,15 +89,18 @@ export class Login {
       return this.toast.show('O campo nome é obrigatório para cadastro', 'danger');
     }
 
-    this.userStorage.saveUser({
-      id: crypto.randomUUID(),
-      name: formControl.name.value,
-      email: formControl.email.value,
-      password: formControl.password.value,
-      points: 0,
-      ordersCount: 0,
-      updatedAt: new Date().toISOString(),
-    });
+      this.userStorage.saveUser({
+        id: crypto.randomUUID(),
+        name: formControl.name.value,
+        email: formControl.email.value,
+        password: formControl.password.value,
+        isLogged: true,
+        points: 0,
+        ordersCount: 0,
+        updatedAt: new Date().toISOString(),
+      });
+
+    this.register = false;
   }
 
   validateFormControl(control: FormControl) {

@@ -24,16 +24,6 @@
       </span>
     </section>
   </div>
-
-  <div class="d-flex mt-3 gap-3">
-    <button class="bg-background color-muted p-2 w-100" (click)="saveExampleUser()">
-      Salvar usuario de exemplo
-    </button>
-
-    <button class="bg-background color-muted p-2 w-100" (click)="clearSavedUser()">
-      Limpar usuario salvo
-    </button>
-  </div>
 </div>
 
 <div class="bg-secondary-bege p-3 mt-3">
@@ -74,6 +64,7 @@
   <div class="d-flex mt-3">
     <button
       class="d-flex justify-content-center align-items-center bg-foreground text-white w-100 p-3 gap-2"
+      (click)="logout()"
     >
       <i class="fa-solid fa-arrow-right-from-bracket"></i>
       Sair
