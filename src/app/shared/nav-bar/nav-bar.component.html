@@ -3,16 +3,16 @@
     @if (navBarState$ | async; as navBarState) {
       @if (!navBarState.compact) {
         <div class="d-flex align-items-center gap-2">
-          <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToHome()" />
+          <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToRoute('/home')" />
           <div class="d-flex flex-column"></div>
         </div>
 
         <div class="buttons">
-          <button class="loyalty">
+          <button class="loyalty" (click)="redirectToRoute('/loyalty')">
             <i class="fa-solid fa-crown"></i>
           </button>
 
-          <button class="notification" (click)="redirectToPromotionPage()">
+          <button class="notification" (click)="redirectToRoute('/promotion')">
             <i class="fa-solid fa-bell"></i>
           </button>
         </div>

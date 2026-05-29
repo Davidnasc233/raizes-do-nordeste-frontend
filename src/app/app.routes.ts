@@ -6,6 +6,7 @@ import { PaymentStatusComponent } from './features/cart/payment/payment-status/p
 import { Login } from './features/login/login';
 import { AuthGuard } from './guards/auth.guard';
 import { PromotionNotification } from './features/promotion-select/promotion-notification/promotion-notification';
+import { Loyalty } from './features/loyalty/loyalty';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,16 @@ export const routes: Routes = [
       hideNavMenu: true,
       navBar: { compact: true, title: 'Promoções', icon:'fa-solid fa-tag' },
     },
+  },
+  {
+    path: 'loyalty',
+    component: Loyalty,
+    data: {
+      hideNavMenu: true,
+      navBar: {
+        compact: true, title: 'Fidelidade', icon: 'fa-solid fa-crown'
+      },
+    }
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];

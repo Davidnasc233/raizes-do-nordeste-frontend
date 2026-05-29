@@ -75,14 +75,10 @@ export class NavBarComponent implements OnInit {
     return this.router.navigateByUrl('/home');
   }
 
-  redirectToHome() {
-    return this.router.navigateByUrl('/home');
+  redirectToRoute(route: string) {
+    return this.router.navigateByUrl(`${route}`);
   }
-
-  redirectToPromotionPage() {
-    this.navigationService.navigateTo('/promotion');
-  }
-
+  
   toggleNotification(): void {
     this.hasNotification = !this.hasNotification;
   }
