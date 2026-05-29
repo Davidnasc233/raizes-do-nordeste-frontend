@@ -59,7 +59,20 @@
     <strong>Histórico de pedidos</strong>
   </p>
 
-  <span class="color-muted"> Nenhum pedido ainda. </span>
+  @for (order of orders$ | async; track order.id) {
+    <div class="d-flex justify-content-between align-items-center py-2 px-4 mt-2 bg-secondary-bege">
+      <div class="d-flex flex-column">
+        <span>{{ order.orderCode }}</span>
+        <small>{{ order.deliveryStatus }} - {{ order.status }}</small>
+      </div>
+
+      <div>
+        <span> Total </span>
+      </div>
+    </div>
+  } @empty {
+    <span class="color-muted"> Nenhum pedido ainda.</span>
+  }
 
   <div class="d-flex mt-3">
     <button
