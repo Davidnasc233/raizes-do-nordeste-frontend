@@ -3,17 +3,57 @@
     @if (navBarState$ | async; as navBarState) {
       @if (!navBarState.compact) {
         <div class="d-flex align-items-center gap-2">
-          <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToRoute('/home')" />
+          <img
+            src="images/logo.png"
+            alt="logo"
+            class="logo radius-8"
+            (click)="redirectToRoute('/home')"
+          />
           <div class="d-flex flex-column"></div>
         </div>
 
+        <div class="btn-nav d-flex align-items-center gap-5">
+          <div>
+            <a
+              href=""
+              (click)="redirectToRoute('/home'); $event.preventDefault()"
+              class="d-flex align-items-center gap-1"
+            >
+              <i class="fa-regular fa-house"></i>
+              <span>Início</span>
+            </a>
+          </div>
+
+          <a href="" (click)="redirectToRoute('/promotion'); $event.preventDefault()">Promoções</a>
+
+          <a href="" (click)="redirectToRoute('/loyalty'); $event.preventDefault()">Fidelidade</a>
+        </div>
+
         <div class="buttons">
-          <button class="loyalty" (click)="redirectToRoute('/loyalty')">
+          <button class="loyalty d-flex gap-2 align-items-center" (click)="redirectToRoute('/loyalty')">
             <i class="fa-solid fa-crown"></i>
+            <span class="text-white loyalty-text">Fidelidade</span>
           </button>
 
-          <button class="notification" (click)="redirectToRoute('/promotion')">
-            <i class="fa-solid fa-bell"></i>
+          <div>
+            <button class="menu" (click)="redirectToRoute('/promotion')">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+          </div>
+
+          <button class="menu cart" (click)="redirectToRoute('/cart')">
+            @if ((countCart$ | async) ?? 0; as total) {
+              @if (total > 0) {
+                <span class="count text-white">
+                  {{ total }}
+                </span>
+              }
+            }
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+
+          <button class="menu user" (click)="redirectToRoute('/user-profile')">
+            <i class="fa-solid fa-user"></i>
           </button>
         </div>
       } @else {

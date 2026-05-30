@@ -22,6 +22,6 @@ export const PROMOTIONS: IPromotionItem[] = [
         id: 1,
         tag: 'FIDELIDADE',
         title: 'Dobro de pontos',
-        description: 'Pedidos acima de R$ 80 ganham 2x pontos no Fidelidade'
+        description: 'Pedidos acima de R$ 80 ganham 2x pontos no Fidelidade.'
     }
 ]

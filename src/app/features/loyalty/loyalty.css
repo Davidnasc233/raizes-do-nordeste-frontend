@@ -1,64 +1,77 @@
 .bg-loyalty {
-    background: linear-gradient(135deg, oklch(55% .16 40), oklch(65% .15 65));
+  background: linear-gradient(135deg, oklch(55% 0.16 40), oklch(65% 0.15 65));
 }
 
 .fa-star {
-    font-size: 1.2rem;
-    color: var(--color-text) !important;
+  font-size: 1.2rem;
+  color: var(--color-text) !important;
 }
 
 .actual-level {
-    small {
-        font-size: 0.8rem;
-    }
+  small {
+    font-size: 0.8rem;
+  }
 
-    .fa-arrow-right {
-        font-size: 0.6rem;
-    }
+  .fa-arrow-right {
+    font-size: 0.6rem;
+  }
+}
+
+.progress-track {
+  height: 0.9rem;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.progress-fill {
+  height: 100%;
+  max-width: 100%;
+  background: linear-gradient(90deg, #ffd166 0%, #ffe08a 100%);
+  transition: width 0.4s ease;
 }
 
 .level {
-    border: 2px solid var(--disabled);
+  border: 2px solid var(--disabled);
 
-    span {
-        font-size: 0.9rem;
-    }
+  span {
+    font-size: 0.9rem;
+  }
 
-    small {
-        font-size: 0.8rem;
-    }
+  small {
+    font-size: 0.8rem;
+  }
 }
 
 .rewards {
-    border: 1px solid var(--disabled);
+  border: 1px solid var(--disabled);
 
+  span {
+    font-weight: 600;
+  }
+
+  small {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  button {
     span {
-        font-weight: 600;
+      color: var(--color-primary);
+      font-size: 0.8rem;
     }
-
-    small {
-        font-size: 0.8rem;
-        color: var(--color-muted);
-    }
-
-    button{
-        span {
-            color: var(--color-primary);
-            font-size: 0.8rem;
-        }
-    } 
+  }
 }
 
-
 .fa-gift {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .selected {
-    border-color: var(--color-primary);
-    background-color: rgba(231, 0, 11, 0.2);
+  border-color: var(--color-primary);
+  background-color: rgba(231, 0, 11, 0.2);
 
-    .fa-star {
-        color: var(--color-primary) !important;
-    }
+  .fa-star {
+    color: var(--color-primary) !important;
+  }
 }

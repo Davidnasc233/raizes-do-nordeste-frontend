@@ -26,3 +26,11 @@
 .color-custom {
     font-size: 0.8rem;
 }
+
+@media (min-width: 950px) {
+    .select-items {
+        display: flex;
+        justify-content: start !important;
+        gap: 16px;
+    }
+}

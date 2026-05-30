@@ -32,6 +32,7 @@ export class NavBarComponent implements OnInit {
   orderCode$!: Observable<string | undefined>;
   navBarState$!: Observable<NavBarState>;
   navBarTitle$!: Observable<string>;
+  countCart$!: Observable<number>;
 
   constructor(
     private router: Router,
@@ -42,6 +43,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute$ = this.navigationService.selectedRoute$;
+    this.countCart$ = this.cartService.totalItems$;
     this.orderCode$ = this.cartService.lastOrder$.pipe(map((lastOrder) => lastOrder?.orderCode));
     this.navBarState$ = this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
@@ -78,7 +80,7 @@ export class NavBarComponent implements OnInit {
   redirectToRoute(route: string) {
     return this.router.navigateByUrl(`${route}`);
   }
-  
+
   toggleNotification(): void {
     this.hasNotification = !this.hasNotification;
   }
