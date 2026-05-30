@@ -1,53 +1,54 @@
-@for (item of filteredRecipes$ | async; track item.id) {
-<div class="background mb-3">
+<div class="card-section">
+    @for (item of filteredRecipes$ | async; track item.id) {
+        <div class="background mb-3">
 
-    <div class="d-flex">
-        <div class="image">
-            <img src="{{item.image}}" alt="dishes">
-
-        </div>
-
-
-        <div class="resume d-flex flex-column justify-content-between ms-2 w-100">
-
-            <div class="d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <p class="m-0 color-custom">
-                        <strong>
-                            {{ item.name }}
-                        </strong>
-                    </p>
-
-                    <span class="m-0 tag" *ngIf="item.tag">
-                        <strong>
-                            {{ item.tag }}
-                        </strong>
-                    </span>
+            <div class=" items d-flex">
+                <div class="image">
+                    <img src="{{item.image}}" alt="dishes">
                 </div>
 
-                <span class="color-muted">
-                    {{ item.description }}
-                </span>
-            </div>
 
-            <div class="d-flex justify-content-between align-items-end">
-                <div class="d-flex">
-                    <div>
-                        <p class="primary m-0">
-                            <strong>{{ item.price | currency: 'BRL'}}</strong>
-                        </p>
+                <div class="resume d-flex flex-column justify-content-between ms-2 w-100">
+
+                    <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <p class="m-0 color-custom">
+                                <strong>
+                                    {{ item.name }}
+                                </strong>
+                            </p>
+
+                            <span class="m-0 tag" *ngIf="item.tag">
+                                <strong>
+                                    {{ item.tag }}
+                                </strong>
+                            </span>
+                        </div>
+
+                        <span class="color-muted">
+                            {{ item.description }}
+                        </span>
                     </div>
+
+                    <div class="price d-flex justify-content-between align-items-end">
+                        <div class="d-flex">
+                            <div>
+                                <p class="primary m-0">
+                                    <strong>{{ item.price | currency: 'BRL'}}</strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <button class="custom-button" (click)="addToCart(item)">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+
                 </div>
 
-                <button class="custom-button" (click)="addToCart(item)">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
             </div>
-
         </div>
-
-    </div>
+    } @empty {
+    <p class="text-center color-muted">Nenhum prato disponível neste momento.</p>
+    }
 </div>
-} @empty {
-<p class="text-center color-muted">Nenhum prato disponível neste momento.</p>
-}

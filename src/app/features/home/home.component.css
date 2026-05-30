@@ -1,7 +1,6 @@
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   margin: 0;
 }
 
@@ -29,6 +28,27 @@
   }
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
 span {
   font-size: 0.6rem;
+}
+
+@media (min-width: 950px) {
+  .main {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .section {
+    width: 60%;
+  }
+
+  .food-menu {
+    width: 100%;
+  }
 }

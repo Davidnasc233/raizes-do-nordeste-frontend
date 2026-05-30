@@ -8,11 +8,12 @@ import { map, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { IOrder } from '../../models/order.model';
 import { Router } from '@angular/router';
+import { PromotionSelect } from '../promotion-select/promotion-select';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselComponent, FoodMenu, DishCard, RestaurantSelector, AsyncPipe],
+  imports: [CarouselComponent, FoodMenu, DishCard, RestaurantSelector, AsyncPipe, PromotionSelect],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -35,7 +36,12 @@ export class HomeComponent {
 
     if (actualOrders) {
       const lastOrder = actualOrders;
-      this.router.navigate(['/cart/payment-status'], { state: { lastOrder: lastOrder } });
+      this.router.navigate(['/cart/payment-status'], {
+        state: {
+          lastOrder: lastOrder,
+          cartData: lastOrder.items,
+        },
+      });
     }
   }
 }

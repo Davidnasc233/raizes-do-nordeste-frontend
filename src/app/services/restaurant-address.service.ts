@@ -1,38 +1,36 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { MOCK_RESTAURANTS } from '../models/restaurant.mock';
-import { RestaurantsResponse, RestaurantUnit } from '../models/restaurant-models';
+import { IRestaurantsResponse, IRestaurantUnit } from '../models/restaurant-models';
 import { MenuCategory } from '../shared/enum/category.enum';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class RestaurantAddressService {
-    private  readonly mockData: RestaurantsResponse = MOCK_RESTAURANTS;
+  private readonly mockData: IRestaurantsResponse = MOCK_RESTAURANTS;
 
-    private readonly selectedRestaurantSub = new BehaviorSubject<RestaurantUnit | null>(
-        this.mockData.unit[0] ?? null,
-    );
-    private readonly selectedCategorySub = new BehaviorSubject<string | null>(MenuCategory.ALL); 
+  private readonly selectedRestaurantSub = new BehaviorSubject<IRestaurantUnit | null>(
+    this.mockData.unit[0] ?? null,
+  );
+  private readonly selectedCategorySub = new BehaviorSubject<string | null>(MenuCategory.ALL);
 
+  readonly selectCategory$: Observable<string | null> = this.selectedCategorySub.asObservable();
 
-    readonly selectCategory$: Observable<string | null> =
-    this.selectedCategorySub.asObservable();
+  readonly selectedUnit$: Observable<IRestaurantUnit | null> =
+    this.selectedRestaurantSub.asObservable();
 
-    readonly selectedUnit$: Observable<RestaurantUnit | null> =
-        this.selectedRestaurantSub.asObservable();
+  constructor() {}
 
-    constructor() {}
+  getData(): Observable<IRestaurantsResponse> {
+    return of(this.mockData);
+  }
 
-    getData(): Observable<RestaurantsResponse> {
-        return of(this.mockData);
-    }
+  selectRestaurant(unit: IRestaurantUnit) {
+    this.selectedRestaurantSub.next(unit);
+  }
 
-    selectRestaurant(unit: RestaurantUnit) {
-        this.selectedRestaurantSub.next(unit);
-    }
-
-    selectCategory(category: string) {
-        this.selectedCategorySub.next(category);
-    }
+  selectCategory(category: string) {
+    this.selectedCategorySub.next(category);
+  }
 }

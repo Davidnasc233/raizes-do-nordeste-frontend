@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ValidateLgpdService } from '../../services/validate-lgpd-consent.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { IUserProfile } from '../../models/user.model';
 import { UserStorageService } from '../../services/user-storage.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { IOrder } from '../../models/order.model';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, CurrencyPipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
@@ -18,6 +18,7 @@ export class UserProfile {
   hasAcceptedLgpd$!: Observable<boolean | null>;
   orders$!: Observable<IOrder[]>;
   user$!: Observable<IUserProfile | null>;
+  totalOrderValue$!: Observable<number>;
 
   constructor(
     private readonly validateLgpdService: ValidateLgpdService,
@@ -30,7 +31,17 @@ export class UserProfile {
     this.hasAcceptedLgpd$ = this.validateLgpdService.lgpdConsent$;
     this.user$ = this.userStorageService.user$;
     this.orders$ = this.cartService.orders$;
-    console.log(this.orders$)
+  }
+
+  get orderStatus() {
+    return (order: IOrder) => {
+      if (order.status === 'accepted') {
+        return 'Aceito';
+      } else if (order.status === 'refused') {
+        return 'Cancelado';
+      }
+      return '';
+    };
   }
 
   revokeLgpdConsent(): void {
@@ -44,6 +55,10 @@ export class UserProfile {
       this.userStorageService.saveUser(loggedUser);
     }
     this.router.navigate(['/login']);
+  }
+
+  getTotalOrderValue(order: IOrder): Observable<number> {
+    return this.cartService.calculateOrdersTotalValue(order);
   }
 
   deleteAllData() {
