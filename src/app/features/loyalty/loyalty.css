@@ -1,3 +1,64 @@
 .bg-loyalty {
     background: linear-gradient(135deg, oklch(55% .16 40), oklch(65% .15 65));
 }
+
+.fa-star {
+    font-size: 1.2rem;
+    color: var(--color-text) !important;
+}
+
+.actual-level {
+    small {
+        font-size: 0.8rem;
+    }
+
+    .fa-arrow-right {
+        font-size: 0.6rem;
+    }
+}
+
+.level {
+    border: 2px solid var(--disabled);
+
+    span {
+        font-size: 0.9rem;
+    }
+
+    small {
+        font-size: 0.8rem;
+    }
+}
+
+.rewards {
+    border: 1px solid var(--disabled);
+
+    span {
+        font-weight: 600;
+    }
+
+    small {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+    }
+
+    button{
+        span {
+            color: var(--color-primary);
+            font-size: 0.8rem;
+        }
+    } 
+}
+
+
+.fa-gift {
+    font-size: 0.9rem;
+}
+
+.selected {
+    border-color: var(--color-primary);
+    background-color: rgba(231, 0, 11, 0.2);
+
+    .fa-star {
+        color: var(--color-primary) !important;
+    }
+}
