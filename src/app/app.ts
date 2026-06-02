@@ -7,6 +7,7 @@ import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { ToastService } from './services/toast.service';
 import { CommonModule } from '@angular/common';
 import { ToastModalComponent } from './shared/toast/toast-modal.component';
+import { Footer } from './shared/footer/footer';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import { ToastModalComponent } from './shared/toast/toast-modal.component';
     NavBarComponent,
     CommonModule,
     ToastModalComponent,
+    Footer
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
