@@ -1,23 +1,29 @@
-<main>
-  <div class="main d-flex flex-column gap-3">
-    @if (lastOrderItem$ | async; as order) {
-    <div class="bg-success-green p-3 d-flex align-items-center gap-3">
-      <i class="fa-solid fa-circle"></i>
-      <button (click)="openOrder()">
-        <p class="m-0 text-white">
-          Pedido {{ order.orderCode }} - {{ order.deliveryStatus }}
-        </p>
-        <span class="m-0 text-white">
-          Toque para acompanhar o pedido em tempo real.
-        </span>
-      </button>
+<main class="d-flex gap-3">
+  @if (lastOrderItem$ | async; as order) {
+  <div class="bg-success-green p-3 d-flex align-items-center gap-2">
+    <i class="fa-solid fa-circle"></i>
+    <button (click)="openOrder()" class="d-flex flex-column align-items-start">
+      <p class="m-0 text-white">
+        Pedido {{ order.orderCode }} - {{ order.deliveryStatus }}
+      </p>
+      <span class="m-0 text-white">
+        Toque para acompanhar o pedido em tempo real.
+      </span>
+    </button>
+  </div>
+  }
+  <div class="main gap-3">
+    <div class=" section d-flex flex-column gap-3">
+      <app-carousel></app-carousel>
+
+      <app-restaurant-selector></app-restaurant-selector>
+
+      <app-promotion-select></app-promotion-select>
     </div>
-    }
-    <app-carousel></app-carousel>
 
-    <app-restaurant-selector></app-restaurant-selector>
-
-    <app-food-menu></app-food-menu>
-    <app-dish-card></app-dish-card>
+    <div class="food-menu">
+      <app-food-menu></app-food-menu>
+      <app-dish-card></app-dish-card>
+    </div>
   </div>
 </main>

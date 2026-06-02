@@ -71,7 +71,9 @@ export class CartService {
     const updatedOrders = [order, ...this.ordersSubject.value];
     this.ordersSubject.next(updatedOrders);
     this.saveOrders(updatedOrders);
-    this.incrementUserOrdersCount();
+    if(status === 'accepted') {
+      this.incrementUserOrdersCount();
+    }
     return order;
   }
 

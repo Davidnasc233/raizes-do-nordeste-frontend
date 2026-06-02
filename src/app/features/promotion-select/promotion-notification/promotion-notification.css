@@ -1,0 +1,49 @@
+.text-promote {
+    span {
+        font-size: 0.8rem;
+    }
+
+    small {
+        font-size: 0.6rem;
+    }
+}
+
+.fa-solid {
+    font-size: 1.2rem;
+}
+
+.bg-secondary-bege {
+    border-left: 3px solid var(--color-primary);
+}
+
+.tag {
+    font-size: 0.6rem;
+    width: fit-content;
+    font-weight: 600;
+    background-color: var(--accent);
+    border-radius: 6px;
+    padding: 4px 8px;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.description {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+}
+
+.btn-activate {
+    font-size: 0.8rem;
+    font-weight:600;
+
+    .fa-solid {
+        font-size: 0.6rem;
+    }
+}
+
+.size {
+    font-size: 0.9rem;
+}

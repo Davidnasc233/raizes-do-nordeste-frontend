@@ -1,4 +1,4 @@
-<div class="d-flex flex-row justify-content-between overflow">
+<div class="select-items d-flex flex-row justify-content-between overflow">
     @for (option of selectOptions; track option.value) {
     <button (click)="selectOption(option.value)" class="custom-button me-1"
         [class.active]="selectedCategory === option.value">
@@ -8,7 +8,7 @@
 </div>
 
 <div>
-    <p class="text-uppercase font-weight-bold color-custom mt-3 mb-0">
+    <p class="text-uppercase font-weight-bold color-custom mt-3 mb-3 mb-0">
         <strong>
             <span>Cardápio</span> - {{ countItems }} itens
         </strong>

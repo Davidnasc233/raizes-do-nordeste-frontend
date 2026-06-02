@@ -1,0 +1,30 @@
+<p class="text-muted size">Confira as ofertas disponíveis para sua região.</p>
+
+<section class="d-flex flex-column gap-3">
+    @for(item of promotionItems; track item.id) {
+        <div>
+            <div class="d-flex flex-column gap-2 bg-secondary-bege p-3 rounded-main">
+                <span class="tag">
+                    {{item.tag }}
+                </span>
+
+                <span class="title">
+                    {{ item.title }}
+                </span>
+
+                <span class="description">
+                    {{ item.description }}
+                </span>
+
+                <button class="d-flex px-0 align-items-center gap-2 btn-activate primary ">
+                    <span>
+                        Ativar oferta
+                    </span> 
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    } @empty {
+        <p>Não há ofertas disponíveis no momento.</p>
+    }
+</section>

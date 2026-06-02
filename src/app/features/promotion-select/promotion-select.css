@@ -1,0 +1,13 @@
+.text-promote {
+    span {
+        font-size: 0.8rem;
+    }
+
+    small {
+        font-size: 0.6rem;
+    }
+}
+
+.fa-solid {
+    font-size: 1.2rem;
+}

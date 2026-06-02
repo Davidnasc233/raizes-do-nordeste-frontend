@@ -1,42 +1,79 @@
 <nav class="nav-container my-0">
   <div class="d-flex align-items-center justify-content-between items">
-    @if (!(currentRoute$ | async)?.includes('cart')) {
-    <div class="d-flex align-items-center gap-2">
-      <img src="images/logo.png" alt="logo" class="logo radius-8" (click)="redirectToHome()"/>
-      <div class="d-flex flex-column">
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="loyalty">
-        <i class="fa-solid fa-crown"></i>
-      </button>
-
-      <button class="notification">
-        <i class="fa-solid fa-bell"></i>
-      </button>
-    </div>
-    } @else {
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-2">
-        <button class="bg-secondary-bege background" (click)="redirectTo()">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-
-        <div>
-          @if ((currentRoute$ | async)?.includes('payment-status')) {
-            <p class="m-0 fs-5">
-              <strong>Pedido {{ orderCode }}</strong>
-            </p>
-          } 
-          @else {
-            <p class="m-0 fs-5">
-              <strong>Carrinho</strong>
-            </p>
-          }
+    @if (navBarState$ | async; as navBarState) {
+      @if (!navBarState.compact) {
+        <div class="d-flex align-items-center gap-2">
+          <img
+            src="images/logo.png"
+            alt="logo"
+            class="logo radius-8"
+            (click)="redirectToRoute('/home')"
+          />
+          <div class="d-flex flex-column"></div>
         </div>
-      </div>
-    </div>
+
+        <div class="btn-nav d-flex align-items-center gap-5">
+          <div>
+            <a
+              href=""
+              (click)="redirectToRoute('/home'); $event.preventDefault()"
+              class="d-flex align-items-center gap-1"
+            >
+              <i class="fa-regular fa-house"></i>
+              <span>Início</span>
+            </a>
+          </div>
+
+          <a href="" (click)="redirectToRoute('/promotion'); $event.preventDefault()">Promoções</a>
+
+          <a href="" (click)="redirectToRoute('/loyalty'); $event.preventDefault()">Fidelidade</a>
+        </div>
+
+        <div class="buttons">
+          <button class="loyalty d-flex gap-2 align-items-center" (click)="redirectToRoute('/loyalty')">
+            <i class="fa-solid fa-crown"></i>
+            <span class="text-white loyalty-text">Fidelidade</span>
+          </button>
+
+          <div>
+            <button class="menu" (click)="redirectToRoute('/promotion')">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+          </div>
+
+          <button class="menu cart" (click)="redirectToRoute('/cart')">
+            @if ((countCart$ | async) ?? 0; as total) {
+              @if (total > 0) {
+                <span class="count text-white">
+                  {{ total }}
+                </span>
+              }
+            }
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+
+          <button class="menu user" (click)="redirectToRoute('/user-profile')">
+            <i class="fa-solid fa-user"></i>
+          </button>
+        </div>
+      } @else {
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <button class="bg-secondary-bege background" (click)="redirectTo()">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <div class="d-flex align-items-center gap-2">
+              @if (navBarState.icon) {
+                <i [class]="navBarState.icon" class="primary"></i>
+              }
+              <p class="m-0 fs-5">
+                <strong>{{ navBarTitle$ | async }}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      }
     }
   </div>
 </nav>

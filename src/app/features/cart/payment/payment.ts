@@ -44,7 +44,7 @@ export class Payment implements OnInit {
 
       this.router.navigate(['/cart/payment-status'], {
         state: {
-          cartData: this.data,
+          cartData: refusedOrder.items,
           paymentStatus: 'refused',
           order: refusedOrder,
         },
@@ -65,7 +65,7 @@ export class Payment implements OnInit {
         this.router
           .navigate(['/cart/payment-status'], {
             state: {
-              cartData: this.data,
+              cartData: acceptedOrder.items,
               paymentStatus: 'accepted',
               order: acceptedOrder,
             },
