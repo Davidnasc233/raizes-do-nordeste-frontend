@@ -5,13 +5,13 @@
         <div class="d-flex justify-content-between">
           <span> Subtotal </span>
           <span>
-            {{ totalValue$ | async | currency: 'BRL' }}
+            {{ totalValue$ | async | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
           </span>
         </div>
         <div class="d-flex justify-content-between">
           <span class="text-muted"> Entrega </span>
           <span class="text-muted">
-            {{ deliveryFee | currency: 'BRL' }}
+            {{ deliveryFee | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
           </span>
         </div>
       </div>
@@ -22,7 +22,7 @@
         </span>
         <span class="primary">
           <strong>
-            {{ totalPayment$ | async | currency: 'BRL' }}
+            {{ totalPayment$ | async | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
           </strong>
         </span>
       </div>
@@ -58,7 +58,7 @@
         @if (isLoading === false) {
           <i class="fa-regular fa-credit-card"></i>
           <span class="pay">
-            <strong> Pagar {{ totalPayment$ | async | currency: 'BRL' }} </strong>
+            <strong> Pagar {{ totalPayment$ | async | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }} </strong>
           </span>
         } @else {
           <span class="pay">

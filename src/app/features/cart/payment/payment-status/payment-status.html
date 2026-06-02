@@ -87,14 +87,14 @@
                             {{ item.quantity }}× {{ item.name }}
                         </span>
                         <span>
-                            {{ (item.price * item.quantity) | currency: 'BRL' }}
+                            {{ (item.price * item.quantity) | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
                         </span>
                     </div>
                     }
                     <div class="d-flex justify-content-between">
                         <span class="text-muted">Entrega</span>
                         <span class="text-muted">
-                            {{ deliveryFee | currency: 'BRL' }}
+                            {{ deliveryFee | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
                         </span>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     </span>
                     <span class="primary">
                         <strong>
-                            {{ total | currency: 'BRL'}}
+                            {{ total | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
                         </strong>
                     </span>
                 </div>

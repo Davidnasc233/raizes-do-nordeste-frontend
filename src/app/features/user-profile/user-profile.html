@@ -68,7 +68,7 @@
         </div>
 
         <div>
-          <span class="light-primary fw-bold"> {{ getTotalOrderValue(order) | async | currency:'BRL' }} </span>
+          <span class="light-primary fw-bold"> {{ getTotalOrderValue(order) | async | currency:'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }} </span>
         </div>
       </div>
     } @empty {
