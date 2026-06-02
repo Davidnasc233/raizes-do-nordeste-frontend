@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationService } from '../../services/navigation.service';
 
 
 @Component({
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './footer.css',
 })
 export class Footer {
-  
+  constructor(private navigationService: NavigationService) {}
+
+  redirectTo(route: string): void {
+    this.navigationService.navigateTo(route);
+  }
 }

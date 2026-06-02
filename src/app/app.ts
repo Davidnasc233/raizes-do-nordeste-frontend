@@ -26,6 +26,10 @@ import { Footer } from './shared/footer/footer';
 export class App {
   protected readonly title = signal('frontend');
 
+  get showFooterOnHomeOnly(): boolean {
+    return this.router.url === '/home';
+  }
+
   constructor(
     private router: Router,
     public toastService: ToastService,

@@ -1,0 +1,17 @@
+.list-unstyled {
+    a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s;
+
+        &:hover {
+            color: var(--color-primary);
+        }
+    }
+}
+
+@media (max-width: 950px) {
+    footer {
+        display: none;
+    }
+}
