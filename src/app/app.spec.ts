@@ -25,4 +25,18 @@ describe('App', () => {
     expect(compiled.querySelector('app-nav-menu')).toBeTruthy();
     expect(compiled.querySelector('main')).toBeTruthy();
   });
+
+  it('deve manter estrutura responsiva sem quebra de layout (caso positivo)', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const main = compiled.querySelector('main');
+
+    expect(main).toBeTruthy();
+    expect(compiled.querySelector('app-nav-bar')).toBeTruthy();
+    expect(compiled.querySelector('app-nav-menu')).toBeTruthy();
+    expect(main?.querySelector('router-outlet')).toBeTruthy();
+  });
 });

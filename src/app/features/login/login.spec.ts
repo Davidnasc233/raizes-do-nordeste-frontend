@@ -101,4 +101,22 @@ describe('Login - Cadastro', () => {
     expect(component.register).toBe(true);
     expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
+
+  it('deve validar campos obrigatórios no login (caso negativo)', () => {
+    component.loginForm.setValue({
+      name: '',
+      email: '',
+      password: '',
+    });
+
+    component.onConfirmLogin();
+
+    expect(component.loginForm.invalid).toBe(true);
+    expect(toastSpy.show).toHaveBeenCalledWith(
+      'Por favor, preencha todos os campos corretamente.',
+      'danger',
+    );
+    expect(userStorageSpy.saveUser).not.toHaveBeenCalled();
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
+  });
 });
