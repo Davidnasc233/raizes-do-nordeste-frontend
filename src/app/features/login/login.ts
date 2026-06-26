@@ -88,32 +88,37 @@ export class Login {
   }
 
   onRegister(formControl: typeof this.loginForm.controls) {
-    if (formControl.name?.value === '') {
-      return this.toast.show('O campo nome é obrigatório para cadastro', 'danger');
+    try {
+      if (formControl.name?.value === '') {
+        return this.toast.show('O campo nome é obrigatório para cadastro', 'danger');
+      }
+
+      const users = this.userStorage.getAllUsers();
+      const formEmail = this.normalizeEmail(formControl.email.value);
+      const existingUser = users.find(
+        (currentUser) => this.normalizeEmail(currentUser.email) === formEmail,
+      );
+
+      if (existingUser) {
+        return this.toast.show('E-mail já cadastrado.', 'danger');
+      }
+
+      this.userStorage.saveUser({
+        id: crypto.randomUUID(),
+        name: formControl.name.value,
+        email: formEmail,
+        password: formControl.password.value,
+        isLogged: true,
+        points: 100,
+        ordersCount: 0,
+        updatedAt: new Date().toISOString(),
+      });
+
+      this.register = false;
+      this.router.navigate(['/home']);
+    } catch (error) {
+      throw error;
     }
-
-    const users = this.userStorage.getAllUsers();
-    const formEmail = this.normalizeEmail(formControl.email.value);
-    const existingUser = users.find(
-      (currentUser) => this.normalizeEmail(currentUser.email) === formEmail,
-    );
-
-    if (existingUser) {
-      return this.toast.show('E-mail já cadastrado.', 'danger');
-    }
-
-    this.userStorage.saveUser({
-      id: crypto.randomUUID(),
-      name: formControl.name.value,
-      email: formEmail,
-      password: formControl.password.value,
-      isLogged: true,
-      points: 100,
-      ordersCount: 0,
-      updatedAt: new Date().toISOString(),
-    });
-
-    this.register = false;
   }
 
   validateFormControl(control: FormControl) {

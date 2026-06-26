@@ -7,6 +7,7 @@ import { UserStorageService } from '../../services/user-storage.service';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { IOrder } from '../../models/order.model';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,6 +25,7 @@ export class UserProfile {
     private readonly validateLgpdService: ValidateLgpdService,
     private readonly userStorageService: UserStorageService,
     private readonly cartService: CartService,
+    private readonly toast: ToastService,
     private readonly router: Router,
   ) {}
 
@@ -62,8 +64,38 @@ export class UserProfile {
   }
 
   deleteAllData() {
-    this.userStorageService.clearUser();
-    localStorage.removeItem('user_lgpd_consent');
-    localStorage.removeItem('orders');
+    try {
+      this.removeUser();
+      this.userStorageService.clearUser();
+      localStorage.removeItem('user_lgpd_consent');
+      localStorage.removeItem('orders');
+    } catch (error) {
+      throw error;
+    } finally {
+      this.logout();
+    }
+  }
+
+  removeUser() {
+    const currentUser = this.userStorageService.getCurrentUser();
+
+    const users = localStorage.getItem('app_users');
+
+    if (!users) {
+      return this.toast.show('Usuários não encontrado.', 'danger');
+    }
+
+    if (!currentUser) {
+      return this.toast.show('Usuários não encontrado.', 'danger');
+    }
+
+    try {
+      const parsedUsers = JSON.parse(users);
+      const newUsersList = parsedUsers.filter((user: IUserProfile) => user.id !== currentUser?.id);
+
+      localStorage.setItem('app_users', JSON.stringify(newUsersList));
+    } catch (error) {
+      throw error;
+    }
   }
 }
