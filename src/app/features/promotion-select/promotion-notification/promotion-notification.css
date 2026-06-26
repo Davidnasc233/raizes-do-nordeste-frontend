@@ -47,3 +47,14 @@
 .size {
     font-size: 0.9rem;
 }
+
+@media (min-width: 950px) {
+  :host {
+    display: flex;
+    justify-content: center;
+  }
+
+  .content {
+    width: 50%;
+  }
+}

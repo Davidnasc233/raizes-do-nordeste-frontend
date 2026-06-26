@@ -61,9 +61,15 @@ export class Login {
   onForgotPassword() {}
 
   onLogin() {
-    const user = this.userStorage.getCurrentUser();
+    const users = this.userStorage.getAllUsers();
+    const formEmail = this.normalizeEmail(this.loginForm.controls.email.value);
+    const user = users.find(
+      (currentUser) =>
+        this.normalizeEmail(currentUser.email) === formEmail &&
+        currentUser.password === this.loginForm.controls.password.value,
+    );
 
-    if (this.loginForm.valid && !user) {
+    if (this.loginForm.valid && users.length === 0) {
       return this.toast.show('Usuário não encontrado.', 'danger');
     }
 
@@ -72,16 +78,13 @@ export class Login {
       return this.toast.show('Por favor, preencha todos os campos corretamente.', 'danger');
     }
 
-      if (
-        user?.email === this.loginForm.controls.email.value &&
-        user?.password === this.loginForm.controls.password.value
-      ) {
-        const loggedUser = { ...user, isLogged: true };
-        this.userStorage.saveUser(loggedUser);
-        this.router.navigate(['/home']);
-      } else {
-        this.toast.show('Email ou senha incorretos. Tente novamente.', 'danger');
-      }
+    if (user) {
+      const loggedUser = { ...user, isLogged: true };
+      this.userStorage.saveUser(loggedUser);
+      this.router.navigate(['/home']);
+    } else {
+      this.toast.show('Email ou senha incorretos. Tente novamente.', 'danger');
+    }
   }
 
   onRegister(formControl: typeof this.loginForm.controls) {
@@ -89,16 +92,26 @@ export class Login {
       return this.toast.show('O campo nome é obrigatório para cadastro', 'danger');
     }
 
-      this.userStorage.saveUser({
-        id: crypto.randomUUID(),
-        name: formControl.name.value,
-        email: formControl.email.value,
-        password: formControl.password.value,
-        isLogged: true,
-        points: 100,
-        ordersCount: 0,
-        updatedAt: new Date().toISOString(),
-      });
+    const users = this.userStorage.getAllUsers();
+    const formEmail = this.normalizeEmail(formControl.email.value);
+    const existingUser = users.find(
+      (currentUser) => this.normalizeEmail(currentUser.email) === formEmail,
+    );
+
+    if (existingUser) {
+      return this.toast.show('E-mail já cadastrado.', 'danger');
+    }
+
+    this.userStorage.saveUser({
+      id: crypto.randomUUID(),
+      name: formControl.name.value,
+      email: formEmail,
+      password: formControl.password.value,
+      isLogged: true,
+      points: 100,
+      ordersCount: 0,
+      updatedAt: new Date().toISOString(),
+    });
 
     this.register = false;
   }
@@ -110,5 +123,9 @@ export class Login {
       }
     }
     return null;
+  }
+
+  private normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
   }
 }

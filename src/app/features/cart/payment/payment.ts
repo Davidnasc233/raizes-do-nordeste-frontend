@@ -38,48 +38,70 @@ export class Payment implements OnInit {
   }
 
   redirectRefusePayment() {
-    if (this.user$ !== null) {
-      const refusedOrder = this.cartService.createOrder('refused', this.data);
-      this.cartService.clearCart();
-
-      this.router.navigate(['/cart/payment-status'], {
-        state: {
-          cartData: refusedOrder.items,
-          paymentStatus: 'refused',
-          order: refusedOrder,
-        },
-      });
-    } else {
-      this.router.navigate(['/login']);
+    if (!this.hasValidItems()) {
+      this.toastService.show(
+        'Carrinho vazio. Adicione itens antes de finalizar o pedido.',
+        'warning',
+      );
+      return;
     }
+
+    if (!this.userStorageService.getCurrentUser()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const refusedOrder = this.cartService.createOrder('refused', this.data);
+    this.cartService.clearCart();
+
+    this.router.navigate(['/cart/payment-status'], {
+      state: {
+        cartData: refusedOrder.items,
+        paymentStatus: 'refused',
+        order: refusedOrder,
+      },
+    });
   }
 
   redirectAcceptedPayment() {
+    if (!this.hasValidItems()) {
+      this.toastService.show(
+        'Carrinho vazio. Adicione itens antes de finalizar o pedido.',
+        'warning',
+      );
+      return;
+    }
+
+    if (!this.userStorageService.getCurrentUser()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.isLoading = true;
 
-    if (this.user$ !== null) {
-      setTimeout(() => {
-        const acceptedOrder = this.cartService.createOrder('accepted', this.data);
-        this.cartService.clearCart();
+    setTimeout(() => {
+      const acceptedOrder = this.cartService.createOrder('accepted', this.data);
+      this.cartService.clearCart();
 
-        this.router
-          .navigate(['/cart/payment-status'], {
-            state: {
-              cartData: acceptedOrder.items,
-              paymentStatus: 'accepted',
-              order: acceptedOrder,
-            },
-          })
-          .finally(() => {
-            this.isLoading = false;
-          });
-      }, 2000);
-    } else {
-      this.router.navigate(['/login']);
-    }
+      this.router
+        .navigate(['/cart/payment-status'], {
+          state: {
+            cartData: acceptedOrder.items,
+            paymentStatus: 'accepted',
+            order: acceptedOrder,
+          },
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    }, 2000);
   }
 
   getTotalValue() {
     this.totalValue$ = this.cartService.totalValue$;
+  }
+
+  private hasValidItems(): boolean {
+    return this.data.some((item) => item.quantity > 0);
   }
 }
