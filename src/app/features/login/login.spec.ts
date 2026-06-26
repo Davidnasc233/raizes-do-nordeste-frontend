@@ -11,6 +11,7 @@ describe('Login - Cadastro', () => {
   let userStorageSpy: {
     saveUser: ReturnType<typeof vi.fn>;
     getCurrentUser: ReturnType<typeof vi.fn>;
+    getAllUsers: ReturnType<typeof vi.fn>;
   };
   let toastSpy: { show: ReturnType<typeof vi.fn> };
   let routerSpy: { navigate: ReturnType<typeof vi.fn> };
@@ -19,6 +20,7 @@ describe('Login - Cadastro', () => {
     userStorageSpy = {
       saveUser: vi.fn(),
       getCurrentUser: vi.fn(),
+      getAllUsers: vi.fn().mockReturnValue([]),
     };
     toastSpy = {
       show: vi.fn(),
@@ -67,6 +69,36 @@ describe('Login - Cadastro', () => {
     );
     expect(component.register).toBe(false);
     expect(toastSpy.show).not.toHaveBeenCalled();
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
+  });
+
+  it('deve impedir cadastro com e-mail duplicado (CT negativo)', () => {
+    userStorageSpy.getAllUsers.mockReturnValue([
+      {
+        id: '1',
+        name: 'Maria existente',
+        email: 'Maria.Teste@email.com',
+        password: 'Teste@123',
+        isLogged: true,
+        points: 100,
+        ordersCount: 1,
+        updatedAt: new Date().toISOString(),
+      },
+    ]);
+
+    component.registerToggle();
+
+    component.loginForm.setValue({
+      name: 'Nova Maria',
+      email: 'maria.teste@email.com',
+      password: 'OutraSenha@123',
+    });
+
+    component.onConfirmLogin();
+
+    expect(userStorageSpy.saveUser).not.toHaveBeenCalled();
+    expect(toastSpy.show).toHaveBeenCalledWith('E-mail já cadastrado.', 'danger');
+    expect(component.register).toBe(true);
     expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
 });
