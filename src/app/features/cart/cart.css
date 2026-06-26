@@ -1,0 +1,11 @@
+
+@media (min-width: 950px) {
+  :host {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main {
+    width: 50%;
+  }
+}
