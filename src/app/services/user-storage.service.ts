@@ -7,7 +7,7 @@ import { IUserProfile } from '../models/user.model';
 })
 export class UserStorageService {
   private readonly USER_STORAGE_KEY = 'app_user_profile';
-  private readonly USERS_STORAGE_KEY = 'app_users';
+  private readonly ALL_USERS_STORAGE_KEY = 'app_users';
   private readonly userSubject = new BehaviorSubject<IUserProfile | null>(this.loadCurrentUser());
 
   readonly user$: Observable<IUserProfile | null> = this.userSubject.asObservable();
@@ -22,7 +22,7 @@ export class UserStorageService {
       users.push(user);
     }
 
-    localStorage.setItem(this.USERS_STORAGE_KEY, JSON.stringify(users));
+    localStorage.setItem(this.ALL_USERS_STORAGE_KEY, JSON.stringify(users));
     localStorage.setItem(this.USER_STORAGE_KEY, JSON.stringify(user));
     this.userSubject.next(user);
   }
@@ -32,7 +32,7 @@ export class UserStorageService {
   }
 
   getAllUsers(): IUserProfile[] {
-    const storedUsers = localStorage.getItem(this.USERS_STORAGE_KEY);
+    const storedUsers = localStorage.getItem(this.ALL_USERS_STORAGE_KEY);
 
     if (!storedUsers) {
       const legacyUser = this.loadLegacyUser();
@@ -42,7 +42,7 @@ export class UserStorageService {
       }
 
       const migratedUsers = [legacyUser];
-      localStorage.setItem(this.USERS_STORAGE_KEY, JSON.stringify(migratedUsers));
+      localStorage.setItem(this.ALL_USERS_STORAGE_KEY, JSON.stringify(migratedUsers));
       return migratedUsers;
     }
 
